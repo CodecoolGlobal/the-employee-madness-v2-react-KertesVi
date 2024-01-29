@@ -13,6 +13,8 @@ import "./index.css";
 import TableTest from "./Pages/TableTest";
 import FormTest from "./Pages/FormTest";
 
+// import EquipmentList from "./Pages/EquipmentList"
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,6 +41,10 @@ const router = createBrowserRouter([
         path: "/form-test",
         element: <FormTest />,
       },
+      // {
+      //   path: "/equipments",
+      //   element: <EquipmentList />,
+      // },
     ],
   },
 ]);

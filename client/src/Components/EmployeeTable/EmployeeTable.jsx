@@ -47,8 +47,8 @@ function EmployeeTable({ employees, onDelete }) {
                 </tr>
               ))
             : employees.map((employee) =>
-                employee.level.includes(searched) ||
-                employee.position.includes(searched) ? (
+                employee.level.toLowerCase().includes(searched.toLowerCase()) ||
+                employee.position.toLowerCase().includes(searched.toLowerCase()) ? (
                   <tr key={employee._id}>
                     <td>{employee.name}</td>
                     <td>{employee.level}</td>
