@@ -13,7 +13,7 @@ import "./index.css";
 import TableTest from "./Pages/TableTest";
 import FormTest from "./Pages/FormTest";
 
-// import EquipmentList from "./Pages/EquipmentList"
+import EquipmentList from "./Pages/EquipmentList"
 
 const router = createBrowserRouter([
   {
@@ -41,10 +41,10 @@ const router = createBrowserRouter([
         path: "/form-test",
         element: <FormTest />,
       },
-      // {
-      //   path: "/equipments",
-      //   element: <EquipmentList />,
-      // },
+      {
+        path: "/equipments",
+        element: <EquipmentList />,
+      },
     ],
   },
 ]);

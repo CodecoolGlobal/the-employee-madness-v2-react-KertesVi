@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Loading from "../Components/Loading";
-import EquipmentTable from "../Components/EmployeeTable";
+import EquipmentTable from "../Components/EquipmentTable";
 
 const fetchEquipments = () => {
   return fetch("/api/equipments").then((res) => res.json());
@@ -12,7 +12,7 @@ const deleteEquipment = (id) => {
   );
 };
 
-const EquipmentList = () => {
+export default function EquipmentList () {
   const [loading, setLoading] = useState(true);
   const [equipments, setEquipments] = useState(null);
 
@@ -38,5 +38,3 @@ const EquipmentList = () => {
 
   return <EquipmentTable equipments={equipments} onDelete={handleDelete} />;
 };
-
-export default EquipmentList;
