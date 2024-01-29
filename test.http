@@ -11,10 +11,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8080/api/employees/63fc6e4bca1cb463caa21779
+DELETE http://localhost:8080/api/employees/65b7a407660d33d85ef81be8
 
 ###
-PATCH http://localhost:8080/api/employees/63fc6e4bca1cb463caa21779
+PATCH http://localhost:8080/api/employees/65b7a41c660d33d85ef81bef
 Content-Type:  application/json
 
 {
