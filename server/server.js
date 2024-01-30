@@ -63,6 +63,30 @@ app.get("/api/employees/", async (req, res) => {
   return res.json(employees);
 });
 
+app.get("/api/employees/order/", async (req, res) => {
+  console.log(req.query);
+  try {
+    if (req.query.sortedBy === "Level") {
+      const employeesSortedByLevel = await EmployeeModel.find().sort({
+        level: 1,
+      });
+      return res.json(employeesSortedByLevel);
+    } else if (req.query.sortedBy === "Name") {
+      const employeesSortedByName = await EmployeeModel.find().sort({
+        name: -1,
+      });
+      return res.json(employeesSortedByName);
+    } else if (req.query.sortedBy === "Position") {
+      const employeesSortedByPosition = await EmployeeModel.find().sort({
+        position: 1,
+      });
+      return res.json(employeesSortedByPosition);
+    }
+  } catch {
+    return res.status(404).json({ massage: "List not found" });
+  }
+});
+
 app.get("/api/employees/:id", async (req, res) => {
   const employee = await EmployeeModel.findById(req.params.id);
   return res.json(employee);
