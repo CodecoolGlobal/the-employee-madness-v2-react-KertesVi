@@ -14,6 +14,7 @@ import TableTest from "./Pages/TableTest";
 import FormTest from "./Pages/FormTest";
 
 import EquipmentList from "./Pages/EquipmentList"
+import EquipmentCreator from "./Pages/EquipmentCreator";
 
 const router = createBrowserRouter([
   {
@@ -45,7 +46,11 @@ const router = createBrowserRouter([
         path: "/equipments",
         element: <EquipmentList />,
       },
-    ],
+      {
+        path: "/createEquipments",
+        element: <EquipmentCreator />,
+      },
+   ],
   },
 ]);
 

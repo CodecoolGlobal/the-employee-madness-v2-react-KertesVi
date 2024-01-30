@@ -26,7 +26,7 @@ Content-Type:  application/json
 GET http://localhost:8080/api/equipments/
 
 ###
-POST http://localhost:8080/api/equipments/
+POST http://localhost:8080/api/createEquipments/
 Content-Type: application/json
 
 {
@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8080/api/equipments/65b7d91116f905c6ef38e34d
+DELETE http://localhost:8080/api/equipments/65b7d5ed16f905c6ef38e34c
 
 ###
 PATCH http://localhost:8080/api/equipments/65b7d91116f905c6ef38e34d

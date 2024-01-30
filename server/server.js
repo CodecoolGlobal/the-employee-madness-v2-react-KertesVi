@@ -19,17 +19,26 @@ app.get("/api/equipments/", async (req, res) => {
   return res.json(equipments);
 });
 
-// app.post("/api/equipments/", async (req, res, next) => {
-//   const equipment = req.body;
+app.post("/api/equipments/", async (req, res, next) => {
+  const equipment = req.body;
 
-//   try {
-//     const saved = await EquipmentSchema.create(equipment);
-//     return res.json(saved);
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
+  try {
+    const saved = await EquipmentSchema.create(equipment);
+    return res.json(saved);
+  } catch (err) {
+    return next(err);
+  }
+});
 
+app.delete("/api/equipments/:id", async (req, res, next) => {
+  try {
+    const equipment = await EquipmentSchema.findById(req.params.id);
+    const deleted = await equipment.delete();
+    return res.json(deleted);
+  } catch (err) {
+    return next(err);
+  }
+});
 
 app.get("/api/employees/", async (req, res) => {
   const employees = await EmployeeModel.find().sort({ created: "desc" });
