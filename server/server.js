@@ -19,12 +19,30 @@ app.get("/api/equipments/", async (req, res) => {
   return res.json(equipments);
 });
 
+app.get("/api/equipments/:id", async (req, res) => {
+  const equipment = await EquipmentSchema.findById(req.params.id);
+  return res.json(equipment);
+});
+
 app.post("/api/equipments/", async (req, res, next) => {
   const equipment = req.body;
 
   try {
     const saved = await EquipmentSchema.create(equipment);
     return res.json(saved);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+app.patch("/api/equipments/:id", async (req, res, next) => {
+  try {
+    const equipment = await EquipmentSchema.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: { ...req.body } },
+      { new: true }
+    );
+    return res.json(equipment);
   } catch (err) {
     return next(err);
   }
