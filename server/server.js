@@ -65,7 +65,6 @@ app.get("/api/employees/", async (req, res) => {
 });
 
 app.get("/api/employees/order/", async (req, res) => {
-  console.log(req.query);
   try {
     if (req.query.sortedBy === "Level") {
       const levels = { Junior: 1, Medior: 2, Senior: 3, Expert: 4, Godlike: 5 };
@@ -76,7 +75,7 @@ app.get("/api/employees/order/", async (req, res) => {
           ? levels[a.level] - levels[b.level]
           : levels[b.level] - levels[a.level]
       );
-     return res.json(employeesSortedByLevel);
+      return res.json(employeesSortedByLevel);
     } else if (req.query.sortedBy === "Name") {
       const employeesSortedByName = await EmployeeModel.find();
 
@@ -87,13 +86,13 @@ app.get("/api/employees/order/", async (req, res) => {
       );
       return res.json(employeesSortedByName);
     } else if (req.query.sortedBy === "Position") {
-      const employeesSortedByPosition = await EmployeeModel.find()
-      
+      const employeesSortedByPosition = await EmployeeModel.find();
+
       employeesSortedByPosition.sort((a, b) =>
-      req.query.order == "asc"
-        ? a.position.toLowerCase().localeCompare(b.position.toLowerCase())
-        : b.position.toLowerCase().localeCompare(a.position.toLowerCase())
-    );
+        req.query.order == "asc"
+          ? a.position.toLowerCase().localeCompare(b.position.toLowerCase())
+          : b.position.toLowerCase().localeCompare(a.position.toLowerCase())
+      );
       return res.json(employeesSortedByPosition);
     }
   } catch (error) {
@@ -105,6 +104,16 @@ app.get("/api/employees/order/", async (req, res) => {
 app.get("/api/employees/:id", async (req, res) => {
   const employee = await EmployeeModel.findById(req.params.id);
   return res.json(employee);
+});
+
+app.get("/api/search/:search", async (req, res) => {
+  try {
+    const employees = await EmployeeModel.find({name: {$regex: req.params.search, $options: 'i'}});
+    res.json(employees);
+  } catch (error) {
+    console.error("Error fetching employees: ", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.post("/api/employees/", async (req, res, next) => {

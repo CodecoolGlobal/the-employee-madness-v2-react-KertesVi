@@ -16,6 +16,7 @@ import FormTest from "./Pages/FormTest";
 import EquipmentList from "./Pages/EquipmentList"
 import EquipmentCreator from "./Pages/EquipmentCreator";
 import EquipmentUpdater from "./Pages/EquipmentUpdater";
+import SearchResults from "./Pages/SearchResultList";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "/updateEquipments/:id",
         element: <EquipmentUpdater />,
+      },
+      {
+        path: "/search/:search",
+        element: <SearchResults />,
       },
    ],
   },

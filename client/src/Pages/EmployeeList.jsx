@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Loading from "../Components/Loading";
 import EmployeeTable from "../Components/EmployeeTable";
-// import { useParams } from "react-router-dom";
 
 const fetchEmployees = (sortedBy,order) => {
   if (sortedBy === "" && order === "" ){
@@ -25,8 +24,6 @@ const EmployeeList = () => {
     sortedBy: "",
     order: ""
   })
-  // const { sort } = useParams("")
-  console.log(order)
 
   const handleDelete = (id) => {
     deleteEmployee(id);
