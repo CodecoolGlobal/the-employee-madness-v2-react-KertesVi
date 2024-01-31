@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./EmployeeTable.css";
 
+
+
 function EmployeeTable({ employees, onDelete, setOrder, order}) {
   const [searched, setSearched] = useState("");
 
@@ -14,9 +16,9 @@ function EmployeeTable({ employees, onDelete, setOrder, order}) {
       <table>
         <thead>
           <tr>
-            <th><button onClick={()=> setOrder({...order, sortedBy: "Name", order: order.order === "desc" ?  "asc": "desc"})}>Name</button></th>
-            <th><button onClick={()=> setOrder({...order, sortedBy: "Level", order: order.order === "desc" ?  "asc": "desc"})}>Level</button></th>
-            <th><button onClick={()=> setOrder({...order, sortedBy: "Position", order: order.order === "desc" ?  "asc": "desc"})}>Position</button></th>
+            <th><button onClick={()=> setOrder({...order, sortedBy: "Name", order: order.order === "desc" ?  "asc": "desc"})}>Name {order.sortedBy === "Name" && (order.order === "asc" ?  "⬇": "⬆")}</button></th>
+            <th><button onClick={()=> setOrder({...order, sortedBy: "Level", order: order.order === "desc" ?  "asc": "desc"})}>Level {order.sortedBy === "Level" && (order.order === "asc" ?  "⬇": "⬆")}</button></th>
+            <th><button onClick={()=> setOrder({...order, sortedBy: "Position", order: order.order === "desc" ?  "asc": "desc"})}>Position {order.sortedBy === "Position" && (order.order === "asc" ?  "⬇": "⬆")}</button></th>
             <th>
               <input
                 onChange={handleSearch}
