@@ -17,6 +17,7 @@ import EquipmentList from "./Pages/EquipmentList"
 import EquipmentCreator from "./Pages/EquipmentCreator";
 import EquipmentUpdater from "./Pages/EquipmentUpdater";
 import SearchResults from "./Pages/SearchResultList";
+import Missing from "./Pages/Missing";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "/search/:search",
         element: <SearchResults />,
+      },
+      {
+        path: "/missing",
+        element: <Missing />,
       },
    ],
   },

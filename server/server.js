@@ -64,6 +64,11 @@ app.get("/api/employees/", async (req, res) => {
   return res.json(employees);
 });
 
+app.get("/api/missing", async (req, res) => {
+  const employees = await EmployeeModel.find();
+  return res.json(employees);
+});
+
 app.get("/api/employees/order/", async (req, res) => {
   try {
     const employees = await EmployeeModel.find();

@@ -4,7 +4,7 @@ import "./EmployeeTable.css";
 
 
 
-function EmployeeTable({ employees, onDelete, setOrder, order}) {
+function EmployeeTable({ employees, onDelete, setOrder, order, setMissing}) {
   const [searched, setSearched] = useState("");
 
   function handleSearch(e) {
@@ -19,12 +19,20 @@ function EmployeeTable({ employees, onDelete, setOrder, order}) {
     return order.sortedBy === orderBy && (order.order === "asc" ?  "⬇": "⬆")
   }
 
+  function handlePresent(id){
+    setMissing((prevMissing) => {
+      const isPresent = prevMissing && prevMissing._id === id;
+      return isPresent ? null :  {_id: id} ; 
+    });
+  }
+  
+
   return (
     <div className="EmployeeTable">
       <table>
         <thead>
           <tr>
-            <th><button onClick={()=> handleOrder("Name")}>Name {handleArrow("Name")}</button></th>
+            <th><button>present</button><button onClick={()=> handleOrder("Name")}>Name {handleArrow("Name")}</button></th>
             <th><button onClick={()=> handleOrder("Level")}>Level {handleArrow("Level")}</button></th>
             <th><button onClick={()=> handleOrder("Position")}>Position {handleArrow("Position")}</button></th>
             <th>
@@ -33,14 +41,14 @@ function EmployeeTable({ employees, onDelete, setOrder, order}) {
                 placeholder="Search by level or position"
               ></input>
             </th>
-            <th />
+           <th />
           </tr>
         </thead>
         <tbody>
           {!searched
             ? employees.map((employee) => (
                 <tr key={employee._id}>
-                  <td>{employee.name}</td>
+                  <td><input onChange={()=> handlePresent(employee._id)} type="checkbox" id={employee._id} className="present"></input>{employee.name}</td>
                   <td>{employee.level}</td>
                   <td>{employee.position}</td>
                   <td>
