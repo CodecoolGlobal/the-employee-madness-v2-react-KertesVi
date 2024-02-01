@@ -108,8 +108,26 @@ app.get("/api/employees/:id", async (req, res) => {
 
 app.get("/api/search/:search", async (req, res) => {
   try {
-    const employees = await EmployeeModel.find({name: {$regex: req.params.search, $options: 'i'}});
-    res.json(employees);
+    const employees = await EmployeeModel.find({
+      name: { $regex: req.params.search, $options: "i" },
+    });
+
+    if (req.query.sortedBy === "Position") {
+      employees.sort((a, b) =>
+        req.query.order == "asc"
+          ? a.position.toLowerCase().localeCompare(b.position.toLowerCase())
+          : b.position.toLowerCase().localeCompare(a.position.toLowerCase())
+      );
+      return res.json(employees);
+    } else if (req.query.sortedBy === "Level") {
+      const levels = { Junior: 1, Medior: 2, Senior: 3, Expert: 4, Godlike: 5 };
+      employees.sort((a, b) =>
+        req.query.order == "asc"
+          ? levels[a.level] - levels[b.level]
+          : levels[b.level] - levels[a.level]
+      );
+      return res.json(employees);
+    }
   } catch (error) {
     console.error("Error fetching employees: ", error);
     res.status(500).json({ error: "Internal Server Error" });

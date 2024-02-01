@@ -3,12 +3,19 @@ import Loading from "../Components/Loading";
 import EmployeeTable from "../Components/EmployeeTable";
 import { useParams } from "react-router-dom";
 
-const fetchEmployees = (search) => {
+const fetchEmployees = (search, sortedBy, order) => {
   if (!search) {
     alert("Missing search word");
     return Promise.reject("Missing search word");
   }
-  return fetch(`/api/search/${search}`).then((res) => res.json());
+
+  let url = `/api/search/${search}`;
+
+  if (sortedBy !== "" && order !== "") {
+    const query = new URLSearchParams({ sortedBy: sortedBy, order: order });
+    url += `?${query}`;
+  }
+  return fetch(url).then((res) => res.json());
 };
 
 const deleteEmployee = (id) => {
@@ -25,22 +32,21 @@ export default function SearchResultList() {
     sortedBy: "",
     order: "",
   });
-  console.log(search);
 
   const handleDelete = (id) => {
     deleteEmployee(id);
-
     setEmployees((employees) => {
       return employees.filter((employee) => employee._id !== id);
     });
   };
 
   useEffect(() => {
-    fetchEmployees(search).then((employees) => {
+    fetchEmployees(search, order.sortedBy, order.order)
+    .then((employees) => {
       setLoading(false);
       setEmployees(employees);
     });
-  }, [search]);
+  }, [search, order.order, order.sortedBy]);
 
   if (loading) {
     return <Loading />;
