@@ -11,14 +11,22 @@ function EmployeeTable({ employees, onDelete, setOrder, order}) {
     setSearched(e.target.value);
   }
 
+  function handleOrder(orderBy){
+    setOrder({...order, sortedBy: orderBy, order: order.order === "desc" ?  "asc": "desc"})
+  }
+
+  function handleArrow(orderBy){
+    return order.sortedBy === orderBy && (order.order === "asc" ?  "⬇": "⬆")
+  }
+
   return (
     <div className="EmployeeTable">
       <table>
         <thead>
           <tr>
-            <th><button onClick={()=> setOrder({...order, sortedBy: "Name", order: order.order === "desc" ?  "asc": "desc"})}>Name {order.sortedBy === "Name" && (order.order === "asc" ?  "⬇": "⬆")}</button></th>
-            <th><button onClick={()=> setOrder({...order, sortedBy: "Level", order: order.order === "desc" ?  "asc": "desc"})}>Level {order.sortedBy === "Level" && (order.order === "asc" ?  "⬇": "⬆")}</button></th>
-            <th><button onClick={()=> setOrder({...order, sortedBy: "Position", order: order.order === "desc" ?  "asc": "desc"})}>Position {order.sortedBy === "Position" && (order.order === "asc" ?  "⬇": "⬆")}</button></th>
+            <th><button onClick={()=> handleOrder("Name")}>Name {handleArrow("Name")}</button></th>
+            <th><button onClick={()=> handleOrder("Level")}>Level {handleArrow("Level")}</button></th>
+            <th><button onClick={()=> handleOrder("Position")}>Position {handleArrow("Position")}</button></th>
             <th>
               <input
                 onChange={handleSearch}

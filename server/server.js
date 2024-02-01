@@ -66,34 +66,29 @@ app.get("/api/employees/", async (req, res) => {
 
 app.get("/api/employees/order/", async (req, res) => {
   try {
+    const employees = await EmployeeModel.find();
     if (req.query.sortedBy === "Level") {
       const levels = { Junior: 1, Medior: 2, Senior: 3, Expert: 4, Godlike: 5 };
-      const employeesSortedByLevel = await EmployeeModel.find();
-
-      employeesSortedByLevel.sort((a, b) =>
+      employees.sort((a, b) =>
         req.query.order == "asc"
           ? levels[a.level] - levels[b.level]
           : levels[b.level] - levels[a.level]
       );
-      return res.json(employeesSortedByLevel);
+      return res.json(employees);
     } else if (req.query.sortedBy === "Name") {
-      const employeesSortedByName = await EmployeeModel.find();
-
-      employeesSortedByName.sort((a, b) =>
+         employees.sort((a, b) =>
         req.query.order == "asc"
           ? a.name.toLowerCase().localeCompare(b.name.toLowerCase())
           : b.name.toLowerCase().localeCompare(a.name.toLowerCase())
       );
-      return res.json(employeesSortedByName);
+      return res.json(employees);
     } else if (req.query.sortedBy === "Position") {
-      const employeesSortedByPosition = await EmployeeModel.find();
-
-      employeesSortedByPosition.sort((a, b) =>
+      employees.sort((a, b) =>
         req.query.order == "asc"
           ? a.position.toLowerCase().localeCompare(b.position.toLowerCase())
           : b.position.toLowerCase().localeCompare(a.position.toLowerCase())
       );
-      return res.json(employeesSortedByPosition);
+      return res.json(employees);
     }
   } catch (error) {
     console.error(error);
