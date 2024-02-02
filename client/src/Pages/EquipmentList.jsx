@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Loading from "../Components/Loading";
 import EquipmentTable from "../Components/EquipmentTable";
 
+
 const fetchEquipments = () => {
   return fetch("/api/equipments").then((res) => res.json());
 };
@@ -12,10 +13,10 @@ const deleteEquipment = (id) => {
   );
 };
 
-export default function EquipmentList () {
+export default function EquipmentList() {
   const [loading, setLoading] = useState(true);
   const [equipments, setEquipments] = useState(null);
-
+ 
   const handleDelete = (id) => {
     deleteEquipment(id);
 
@@ -25,11 +26,10 @@ export default function EquipmentList () {
   };
 
   useEffect(() => {
-    fetchEquipments()
-      .then((equipments) => {
-        setLoading(false);
-        setEquipments(equipments);
-      })
+    fetchEquipments().then((equipments) => {
+      setLoading(false);
+      setEquipments(equipments);
+    });
   }, []);
 
   if (loading) {
@@ -37,4 +37,4 @@ export default function EquipmentList () {
   }
 
   return <EquipmentTable equipments={equipments} onDelete={handleDelete} />;
-};
+}

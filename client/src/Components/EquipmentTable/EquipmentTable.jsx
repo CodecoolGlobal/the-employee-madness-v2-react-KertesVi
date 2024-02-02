@@ -33,15 +33,6 @@ export default function EquipmentTable({ equipments, onDelete }) {
           ))}
         </tbody>
       </table>
-      <div id="listingTable">
-      <button href="javascript:prevPage()" id="btn_prev">
-        Prev
-      </button>
-      <button href="javascript:nextPage()" id="btn_next">
-        Next
-      </button>
-      page: <span id="page"></span>
-      </div>
     </div>
   );
 }
