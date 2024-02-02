@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Loading from "../Components/Loading";
 import EmployeeTable from "../Components/EmployeeTable";
+import Pagination from "../Components/Pagination";
 
 
 const fetchEmployees = (page, sortedBy, order) => {
@@ -48,14 +49,19 @@ const EmployeeList = () => {
   }
 
   return (
+    <>
     <EmployeeTable
       employees={employees}
       setOrder={setOrder}
       order={order}
       onDelete={handleDelete}
-      setPage={setPage}
-      page={page}
+    />
+     <Pagination 
+     employees={employees}
+     setPage={setPage}
+     page={page}
      />
+     </>
   );
 };
 

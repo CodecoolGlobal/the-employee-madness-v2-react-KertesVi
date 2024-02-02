@@ -41,21 +41,21 @@ function EmployeeTable({
     }).then((res) => res.json());
   };
 
-  const handleNextPage = () => {
-    if (page < employees.length){
-       setPage(page + 1);
-    }
-   };
+  // const handleNextPage = () => {
+  //   if (page < employees.length){
+  //      setPage(page + 1);
+  //   }
+  //  };
 
-  const handlePrevPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
+  // const handlePrevPage = () => {
+  //   if (page > 1) {
+  //     setPage(page - 1);
+  //   }
+  // };
 
-  const handleFirst = () => {
-     setPage(1);
-  };
+  // const handleFirst = () => {
+  //    setPage(1);
+  // };
 
  
   return (
@@ -141,7 +141,7 @@ function EmployeeTable({
               )}
         </tbody>
       </table>
-      <div>
+      {/* <div>
         <button onClick={handleFirst}>
         ◀
         </button>
@@ -151,7 +151,7 @@ function EmployeeTable({
         <button onClick={handleNextPage}>
           ▶
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
