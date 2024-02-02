@@ -5,6 +5,7 @@ const EmployeeModel = require("./db/employee.model");
 const EquipmentSchema = require("./db/equipment.model");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
+const PAGE_SIZE = 10;
 
 if (!MONGO_URL) {
   console.error("Missing MONGO_URL environment variable");
@@ -58,29 +59,15 @@ app.delete("/api/equipments/:id", async (req, res, next) => {
   }
 });
 
-app.get("/api/employees/", async (req, res) => {
-  const employees = await EmployeeModel.find().sort({ created: "desc" });
-  return res.json(employees);
-});
-
-app.get("/api/missing", async (req, res) => {
-  const presentDate = new Date();  // Create a new Date object
-  const presentDateString = presentDate.toISOString().split("T")[0];
-  console.log(presentDateString)
+app.get("/api/employees", async (req, res) => {
   try {
-    const missingEmployees = await EmployeeModel.find(
-         { present: { $not: { $eq: presentDateString } }});
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || PAGE_SIZE;
 
-    return res.json(missingEmployees);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+    const skip = (page - 1) * limit;
 
-app.get("/api/employees/order/", async (req, res) => {
-  try {
-    const employees = await EmployeeModel.find();
+    const employees = await EmployeeModel.find().sort({created: "desc"}).skip(skip).limit(limit);
+
     if (req.query.sortedBy === "Level") {
       const levels = { Junior: 1, Medior: 2, Senior: 3, Expert: 4, Godlike: 5 };
       employees.sort((a, b) =>
@@ -104,9 +91,26 @@ app.get("/api/employees/order/", async (req, res) => {
       );
       return res.json(employees);
     }
+
+    return res.json(employees);
   } catch (error) {
     console.error(error);
-    return res.status(404).json({ massage: "Server error" });
+    return res.status(500).json({ error: "Internal server Error" });
+  }
+});
+
+app.get("/api/missing", async (req, res) => {
+  const presentDate = new Date();
+  const presentDateString = presentDate.toISOString().split("T")[0];
+  try {
+    const missingEmployees = await EmployeeModel.find({
+      present: { $not: { $eq: presentDateString } },
+    });
+
+    return res.json(missingEmployees);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

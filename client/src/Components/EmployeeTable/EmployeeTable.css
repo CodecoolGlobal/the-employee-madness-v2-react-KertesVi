@@ -3,4 +3,9 @@
 }
 .present {
   margin-right: 30px;
+  background-color: rgb(198, 218, 255);
+  width:25px;
+  height:25px;
+  border-radius: 5%;
+  border:2px solid rgb(76, 117, 219);
 }
