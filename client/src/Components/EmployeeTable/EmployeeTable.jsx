@@ -41,23 +41,7 @@ function EmployeeTable({
     }).then((res) => res.json());
   };
 
-  // const handleNextPage = () => {
-  //   if (page < employees.length){
-  //      setPage(page + 1);
-  //   }
-  //  };
 
-  // const handlePrevPage = () => {
-  //   if (page > 1) {
-  //     setPage(page - 1);
-  //   }
-  // };
-
-  // const handleFirst = () => {
-  //    setPage(1);
-  // };
-
- 
   return (
     <div className="EmployeeTable">
       <table>
@@ -141,17 +125,6 @@ function EmployeeTable({
               )}
         </tbody>
       </table>
-      {/* <div>
-        <button onClick={handleFirst}>
-        ◀
-        </button>
-        <button onClick={handlePrevPage} disabled={page === 1}>
-          {page}
-        </button>
-        <button onClick={handleNextPage}>
-          ▶
-        </button>
-      </div> */}
     </div>
   );
 }

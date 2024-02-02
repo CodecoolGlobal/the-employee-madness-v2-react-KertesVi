@@ -23,11 +23,13 @@ export default function Pagination({ page, setPage, employees }) {
 
   return (
     <div>
-       <button onClick={handleFirst} disabled={page === 1}>◀◀</button>
-      <button onClick={handlePrevPage} disabled={page === 1}>◀</button>
-      <button onClick={handleNextPage}>
-        {page}
+      <button onClick={handleFirst} disabled={page === 1}>
+        ◀◀
       </button>
+      <button onClick={handlePrevPage} disabled={page === 1}>
+        ◀
+      </button>
+      <button onClick={handleNextPage}>{page}</button>
       <button onClick={handleNextPage}>▶</button>
       <button onClick={handleLast}>▶▶</button>
     </div>
