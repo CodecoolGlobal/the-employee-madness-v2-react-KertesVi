@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import Loading from "../Components/Loading";
 import EmployeeTable from "../Components/EmployeeTable";
 
-const fetchEmployees = (missing, sortedBy, order) => {
-  if (!missing) {
-    alert("everyone present");
-    return Promise.reject("no Missing person");
-  }
+const fetchEmployees = (sortedBy, order) => {
+
   let url = `/api/missing`;
 
   if (sortedBy !== "" && order !== "") {
@@ -29,7 +26,6 @@ const Missing = () => {
     sortedBy: "",
     order: "",
   });
-  const [missing, setMissing] = useState(null);
 
   const handleDelete = (id) => {
     deleteEmployee(id);
@@ -40,18 +36,12 @@ const Missing = () => {
   };
 
   useEffect(() => {
-    fetchEmployees(missing, order.sortedBy, order.order).then(
-      (employees) => {
+    fetchEmployees(order.sortedBy, order.order).then((employees) => {
         setLoading(false);
         setEmployees(employees);
-        if (missing) {
-          setEmployees((employees) => {
-            return employees.filter((employee) => employee._id !== missing._id);
-          });
-        }
       }
     );
-  }, [missing, order.order, order.sortedBy]);
+  }, [order.order, order.sortedBy]);
 
   if (loading) {
     return <Loading />;
@@ -63,7 +53,6 @@ const Missing = () => {
       setOrder={setOrder}
       order={order}
       onDelete={handleDelete}
-      setMissing={setMissing}
     />
   );
 };

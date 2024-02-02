@@ -11,6 +11,10 @@ const EmployeeSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  present: {
+    type: String,
+    default: new Date().toISOString(),
+  },
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

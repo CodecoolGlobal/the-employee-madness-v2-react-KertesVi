@@ -23,8 +23,6 @@ const EmployeeList = () => {
     sortedBy: "",
     order: "",
   });
-  const [missing, setMissing] = useState(null);
-  console.log(missing);
 
   const handleDelete = (id) => {
     deleteEmployee(id);
@@ -33,6 +31,7 @@ const EmployeeList = () => {
       return employees.filter((employee) => employee._id !== id);
     });
   };
+
 
   useEffect(() => {
     fetchEmployees(order.sortedBy, order.order).then((employees) => {
@@ -51,8 +50,7 @@ const EmployeeList = () => {
       setOrder={setOrder}
       order={order}
       onDelete={handleDelete}
-      setMissing={setMissing}
-    />
+     />
   );
 };
 

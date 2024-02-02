@@ -3,7 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const EmployeeModel = require("./db/employee.model");
 const EquipmentSchema = require("./db/equipment.model");
-const employeeModel = require("./db/employee.model");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 
@@ -65,8 +64,18 @@ app.get("/api/employees/", async (req, res) => {
 });
 
 app.get("/api/missing", async (req, res) => {
-  const employees = await EmployeeModel.find();
-  return res.json(employees);
+  const presentDate = new Date();  // Create a new Date object
+  const presentDateString = presentDate.toISOString().split("T")[0];
+  console.log(presentDateString)
+  try {
+    const missingEmployees = await EmployeeModel.find(
+         { present: { $not: { $eq: presentDateString } }});
+
+    return res.json(missingEmployees);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.get("/api/employees/order/", async (req, res) => {
@@ -81,7 +90,7 @@ app.get("/api/employees/order/", async (req, res) => {
       );
       return res.json(employees);
     } else if (req.query.sortedBy === "Name") {
-         employees.sort((a, b) =>
+      employees.sort((a, b) =>
         req.query.order == "asc"
           ? a.name.toLowerCase().localeCompare(b.name.toLowerCase())
           : b.name.toLowerCase().localeCompare(a.name.toLowerCase())

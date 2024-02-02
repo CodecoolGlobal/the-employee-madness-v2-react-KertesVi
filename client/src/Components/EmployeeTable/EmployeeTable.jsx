@@ -19,13 +19,18 @@ function EmployeeTable({ employees, onDelete, setOrder, order, setMissing}) {
     return order.sortedBy === orderBy && (order.order === "asc" ?  "⬇": "⬆")
   }
 
-  function handlePresent(id){
-    setMissing((prevMissing) => {
-      const isPresent = prevMissing && prevMissing._id === id;
-      return isPresent ? null :  {_id: id} ; 
-    });
-  }
-  
+  const handlePresent = (id) => {
+    const presentDate = new Date();  // Create a new Date object
+    const presentDateString = presentDate.toISOString().split("T")[0];
+    console.log(presentDateString)
+    return fetch(`/api/employees/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ present: presentDateString}),
+    }).then((res) => res.json());
+  };
 
   return (
     <div className="EmployeeTable">
