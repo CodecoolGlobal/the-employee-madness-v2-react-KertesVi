@@ -15,6 +15,12 @@ const EmployeeSchema = new Schema({
     type: String,
     default: new Date().toISOString(),
   },
+  bonuses: [
+    {
+      value :  Number,
+      createdAt: { type: Date, default: Date.now },
+    },
+  ],
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

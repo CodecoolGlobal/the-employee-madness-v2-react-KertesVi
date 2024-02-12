@@ -97,6 +97,9 @@ function EmployeeTable({
                     >
                       Delete
                     </button>
+                    <Link to={`/bonus/${employee._id}`}>
+                        <button type="button">$</button>
+                      </Link>
                   </td>
                 </tr>
               ))
@@ -119,7 +122,7 @@ function EmployeeTable({
                       >
                         Delete
                       </button>
-                    </td>
+                     </td>
                   </tr>
                 ) : null
               )}

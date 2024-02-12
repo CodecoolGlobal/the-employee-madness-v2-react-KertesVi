@@ -99,6 +99,19 @@ app.get("/api/employees", async (req, res) => {
   }
 });
 
+app.patch("/api/bonus/:employeeId", async (req, res, next) => {
+  try {
+    const employee = await EmployeeModel.findByIdAndUpdate(
+      { _id : req.params.employeeId },
+      { $push: {bonuses: {value: req.body.value}}},
+      { new: true}
+      )
+      return res.json(employee)
+  } catch (error) {
+    return next(error)
+  }
+})
+
 app.get("/api/missing", async (req, res) => {
   const presentDate = new Date();
   const presentDateString = presentDate.toISOString().split("T")[0];
