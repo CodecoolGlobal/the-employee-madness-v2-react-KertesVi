@@ -21,6 +21,12 @@ const EmployeeSchema = new Schema({
       createdAt: { type: Date, default: Date.now },
     },
   ],
+  equipments: [
+    {
+      name :  String,
+      createdAt: { type: Date, default: Date.now },
+    },
+  ],
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

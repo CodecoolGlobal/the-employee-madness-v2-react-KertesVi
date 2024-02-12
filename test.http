@@ -46,9 +46,9 @@ Content-Type:  application/json
   "name": "asd"
 }
 ###
-PATCH http://localhost:8080/api/bonus/65c2433d55e8b0156f3722c5
+PATCH http://localhost:8080/api/bonus/65ca37e18b71a50beb3a9124
 Content-Type:  application/json
 
 {
-  "value": 85
+  "value": 36574
 }

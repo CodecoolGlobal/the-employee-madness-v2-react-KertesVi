@@ -41,7 +41,6 @@ function EmployeeTable({
     }).then((res) => res.json());
   };
 
-
   return (
     <div className="EmployeeTable">
       <table>
@@ -69,6 +68,7 @@ function EmployeeTable({
                 placeholder="Search by level or position"
               ></input>
             </th>
+
             <th />
           </tr>
         </thead>
@@ -98,8 +98,8 @@ function EmployeeTable({
                       Delete
                     </button>
                     <Link to={`/bonus/${employee._id}`}>
-                        <button type="button">$</button>
-                      </Link>
+                      <button type="button">$</button>
+                    </Link>
                   </td>
                 </tr>
               ))
@@ -122,7 +122,7 @@ function EmployeeTable({
                       >
                         Delete
                       </button>
-                     </td>
+                    </td>
                   </tr>
                 ) : null
               )}

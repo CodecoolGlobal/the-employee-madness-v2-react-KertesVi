@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import "./EquipmentTable.css";
 
 export default function EquipmentTable({ equipments, onDelete }) {
-  console.log(equipments);
   return (
     <div className="EquipmentTable">
       <table>

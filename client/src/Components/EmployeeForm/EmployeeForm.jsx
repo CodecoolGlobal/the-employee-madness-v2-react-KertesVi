@@ -1,27 +1,57 @@
 import { useState } from "react";
 
-const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
+const EmployeeForm = ({ onSave, disabled, employee, onCancel, equipments }) => {
   const [name, setName] = useState(employee?.name ?? "");
   const [level, setLevel] = useState(employee?.level ?? "");
   const [position, setPosition] = useState(employee?.position ?? "");
+  const [selectedEquipment, setSelectedEquipment] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (equipments) {
+      const addNewEquipment = {
+        name: selectedEquipment,
+        createdAt: new Date(),
+      };
+      const updatedEquipments = [...employee.equipments, addNewEquipment];
+      console.log(employee);
+      if (employee) {
+        return onSave({
+          ...employee,
+          name,
+          level,
+          position,
+          updatedEquipments,
+        });
+      }
 
-    if (employee) {
       return onSave({
-        ...employee,
+        name,
+        level,
+        position,
+        updatedEquipments,
+      });
+    } else {
+      if (employee) {
+        return onSave({
+          ...employee,
+          name,
+          level,
+          position,
+        });
+      }
+
+      return onSave({
         name,
         level,
         position,
       });
     }
+  };
 
-    return onSave({
-      name,
-      level,
-      position,
-    });
+  const handleEquipmentChange = (e) => {
+    e.preventDefault();
+    setSelectedEquipment(e.target.value);
   };
 
   return (
@@ -55,7 +85,22 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
           id="position"
         />
       </div>
-
+      {equipments ? (
+        <div className="control">
+          <label htmlFor="equipments">Equipments:</label>
+          {employee.equipments.length > 0
+            ? employee.equipments.map((equipment) => <p>{equipment.name}</p>)
+            : null}
+          <select id="equipmentList" onChange={handleEquipmentChange}>
+            <option>Select an equipment</option>
+            {equipments.map((equipment, index) => (
+              <option key={index} name={equipment.name}>
+                {equipment.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      ) : null}
       <div className="buttons">
         <button type="submit" disabled={disabled}>
           {employee ? "Update Employee" : "Create Employee"}
