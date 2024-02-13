@@ -28,6 +28,10 @@ const EmployeeSchema = new Schema({
       returnedAt: { type: Date},
     },
   ],
+  favoriteBrand: {
+    type: Schema.Types.ObjectId,
+    ref: "FavoriteBrand",
+  },
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
