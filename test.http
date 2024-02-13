@@ -50,5 +50,5 @@ PATCH http://localhost:8080/api/bonus/65ca37e18b71a50beb3a9124
 Content-Type:  application/json
 
 {
-  "value": 36574
+  "value": 54
 }

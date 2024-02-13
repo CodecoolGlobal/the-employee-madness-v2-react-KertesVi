@@ -18,13 +18,13 @@ const EmployeeSchema = new Schema({
   bonuses: [
     {
       value :  Number,
-      createdAt: { type: Date, default: Date.now },
+      createdAt: { type: Date, default: new Date().toISOString() },
     },
   ],
   equipments: [
     {
       name :  String,
-      createdAt: { type: Date, default: Date.now },
+      createdAt: { type: Date, default: new Date().toISOString() },
     },
   ],
 });
