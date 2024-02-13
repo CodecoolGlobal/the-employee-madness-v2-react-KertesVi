@@ -24,7 +24,8 @@ const EmployeeSchema = new Schema({
   equipments: [
     {
       name :  String,
-      createdAt: { type: Date, default: new Date().toISOString() },
+      createdAt: { type: Date, default: new Date().toISOString()},
+      returnedAt: { type: Date},
     },
   ],
 });

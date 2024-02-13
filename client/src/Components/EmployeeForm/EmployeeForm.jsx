@@ -8,13 +8,14 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel, equipments }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    let updatedEquipments = []
     if (equipments) {
-      const addNewEquipment = {
-        name: selectedEquipment,
-        createdAt: new Date(),
-      };
-      const updatedEquipments = [...employee.equipments, addNewEquipment];
-      console.log(employee);
+      if (selectedEquipment !== ""){ 
+      const addNewEquipment = { name: selectedEquipment };
+      updatedEquipments = employee.equipments.push(addNewEquipment);
+      } else {
+        updatedEquipments = employee.equipments;
+      }
       if (employee) {
         return onSave({
           ...employee,
@@ -54,6 +55,22 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel, equipments }) => {
     setSelectedEquipment(e.target.value);
   };
 
+  const removeEquipment = (id) => {
+     if (employee && Array.isArray(employee.equipments)) {
+            const index = employee.equipments.findIndex(equipment => equipment._id === id);
+        
+        if (index !== -1) {
+            employee.equipments.splice(index, 1);
+          alert('Equipment removed successfully');
+            console.log(employee);
+        } else {
+            console.log('Equipment not found');
+        }
+    } else {
+        console.log('Invalid employee or equipments array');
+    }
+};
+
   return (
     <form className="EmployeeForm" onSubmit={onSubmit}>
       <div className="control">
@@ -89,7 +106,14 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel, equipments }) => {
         <div className="control">
           <label htmlFor="equipments">Equipments:</label>
           {employee.equipments.length > 0
-            ? employee.equipments.map((equipment) => <p>{equipment.name}</p>)
+            ? employee.equipments.map((equipment, index) => (
+                <p key={index}>
+                  {equipment.name}
+                  <button onClick={() => removeEquipment(equipment._id)}>
+                    ❌
+                  </button>
+                </p>
+              ))
             : null}
           <select id="equipmentList" onChange={handleEquipmentChange}>
             <option>Select an equipment</option>
