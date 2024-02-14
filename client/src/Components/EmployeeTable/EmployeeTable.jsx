@@ -7,8 +7,6 @@ function EmployeeTable({
   onDelete,
   setOrder,
   order,
-  page,
-  setPage,
 }) {
   const [searched, setSearched] = useState("");
 
