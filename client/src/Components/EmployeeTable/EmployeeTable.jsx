@@ -31,7 +31,6 @@ function EmployeeTable({
   const handlePresent = (id) => {
     const presentDate = new Date(); // Create a new Date object
     const presentDateString = presentDate.toISOString().split("T")[0];
-    console.log(presentDateString);
     return fetch(`/api/employees/${id}`, {
       method: "PATCH",
       headers: {

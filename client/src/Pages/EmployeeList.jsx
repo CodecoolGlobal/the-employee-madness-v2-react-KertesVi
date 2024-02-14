@@ -29,11 +29,14 @@ const EmployeeList = () => {
   const [page, setPage] = useState(1);
 
   const handleDelete = (id) => {
+    const isConfirmed = window.confirm(`Are you sure you want to cancel?`)
+    if (isConfirmed){
     deleteEmployee(id);
 
     setEmployees((employees) => {
       return employees.filter((employee) => employee._id !== id);
     });
+  }
   };
 
 
