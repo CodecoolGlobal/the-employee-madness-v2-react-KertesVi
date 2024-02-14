@@ -49,12 +49,11 @@ const populateEmployees = async () => {
 };
 
 
-
 const main = async () => {
   await mongoose.connect(mongoUrl);
 
-  await populateEmployees();
   await populateFavBrands();
+  await populateEmployees();
 
   await mongoose.disconnect();
 };

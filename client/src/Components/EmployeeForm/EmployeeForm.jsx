@@ -1,6 +1,13 @@
 import { useState } from "react";
 
-const EmployeeForm = ({ onSave, disabled, employee, onCancel, equipments }) => {
+const EmployeeForm = ({
+  onSave,
+  disabled,
+  employee,
+  onCancel,
+  equipments,
+  brands,
+}) => {
   const [name, setName] = useState(employee?.name ?? "");
   const [level, setLevel] = useState(employee?.level ?? "");
   const [position, setPosition] = useState(employee?.position ?? "");
@@ -8,11 +15,11 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel, equipments }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    let updatedEquipments = []
+    let updatedEquipments = [];
     if (equipments) {
-      if (selectedEquipment !== ""){ 
-      const addNewEquipment = { name: selectedEquipment };
-      updatedEquipments = employee.equipments.push(addNewEquipment);
+      if (selectedEquipment !== "") {
+        const addNewEquipment = { name: selectedEquipment };
+        updatedEquipments = employee.equipments.push(addNewEquipment);
       } else {
         updatedEquipments = employee.equipments;
       }
@@ -56,20 +63,28 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel, equipments }) => {
   };
 
   const removeEquipment = (id) => {
-     if (employee && Array.isArray(employee.equipments)) {
-            const index = employee.equipments.findIndex(equipment => equipment._id === id);
-        
-        if (index !== -1) {
-            employee.equipments.splice(index, 1);
-          alert('Equipment removed successfully');
-            console.log(employee);
-        } else {
-            console.log('Equipment not found');
-        }
+    if (employee && Array.isArray(employee.equipments)) {
+      const index = employee.equipments.findIndex(
+        (equipment) => equipment._id === id
+      );
+
+      if (index !== -1) {
+        employee.equipments.splice(index, 1);
+        alert("Equipment removed successfully");
+        console.log(employee);
+      } else {
+        console.log("Equipment not found");
+      }
     } else {
-        console.log('Invalid employee or equipments array');
+      console.log("Invalid employee or equipments array");
     }
-};
+  };
+
+  const getFavBrand = () => {
+    for (const brand of brands) {
+      return employee.favoriteBrand === brand._id ? brand.name : "null";
+    }
+  };
 
   return (
     <form className="EmployeeForm" onSubmit={onSubmit}>
@@ -102,6 +117,12 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel, equipments }) => {
           id="position"
         />
       </div>
+
+      <div className="control">
+        <label htmlFor="FavoriteBrand">FavoriteBrand:</label>
+        <p>{getFavBrand()}</p>
+      </div>
+
       {equipments ? (
         <div className="control">
           <label htmlFor="equipments">Equipments:</label>

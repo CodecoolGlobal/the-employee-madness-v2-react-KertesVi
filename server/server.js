@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const EmployeeModel = require("./db/employee.model");
 const EquipmentSchema = require("./db/equipment.model");
+const FavoriteBrandSchema = require("./db/favoriteBrand.model");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 const PAGE_SIZE = 10;
@@ -97,6 +98,11 @@ app.get("/api/employees", async (req, res) => {
     console.error(error);
     return res.status(500).json({ error: "Internal server Error" });
   }
+});
+
+app.get("/api/brands/", async (req, res) => {
+  const brands = await FavoriteBrandSchema.find()
+  return res.json(brands);
 });
 
 app.patch("/api/bonus/:employeeId", async (req, res, next) => {
