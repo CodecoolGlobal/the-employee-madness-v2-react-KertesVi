@@ -82,8 +82,11 @@ const EmployeeForm = ({
 
   const getFavBrand = () => {
     for (const brand of brands) {
-      return employee.favoriteBrand === brand._id ? brand.name : "null";
+      if (employee.favoriteBrand === brand._id) {
+        return brand.name;
+      }
     }
+    return null; 
   };
 
   return (
