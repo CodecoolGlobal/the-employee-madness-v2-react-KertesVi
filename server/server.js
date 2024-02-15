@@ -60,6 +60,8 @@ app.delete("/api/equipments/:id", async (req, res, next) => {
   }
 });
 
+
+
 app.get("/api/employees", async (req, res) => {
   try {
     const employees = await EmployeeModel.find().sort({created: "desc"})

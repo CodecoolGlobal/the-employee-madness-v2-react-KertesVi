@@ -35,7 +35,7 @@ const EmployeeUpdater = () => {
   const [employeeLoading, setEmployeeLoading] = useState(true);
   const [equipments, setEquipments] = useState([]);
   const [brands, setBrands] = useState("");
-
+console.log(employee)
   useEffect(() => {
     setEmployeeLoading(true);
     fetchEmployee(id).then((employee) => {

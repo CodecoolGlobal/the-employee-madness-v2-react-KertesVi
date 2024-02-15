@@ -2,12 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./EmployeeTable.css";
 
-function EmployeeTable({
-  employees,
-  onDelete,
-  setOrder,
-  order,
-}) {
+function EmployeeTable({ employees, onDelete, setOrder, order }) {
   const [searched, setSearched] = useState("");
 
   function handleSearch(e) {
@@ -45,6 +40,8 @@ function EmployeeTable({
           <tr>
             <th>
               <button>present</button>
+            </th>
+            <th>
               <button onClick={() => handleOrder("Name")}>
                 Name {handleArrow("Name")}
               </button>
@@ -58,6 +55,9 @@ function EmployeeTable({
               <button onClick={() => handleOrder("Position")}>
                 Position {handleArrow("Position")}
               </button>
+            </th>
+            <th>
+              <button>Experience</button>
             </th>
             <th>
               <input
@@ -79,11 +79,15 @@ function EmployeeTable({
                       type="checkbox"
                       id={employee._id}
                       className="present"
-                    ></input>
-                    {employee.name}
+                    />
                   </td>
+                  <td>{employee.name}</td>
                   <td>{employee.level}</td>
                   <td>{employee.position}</td>
+                  <td>
+                    {employee.experience}{" "}
+                    {employee.experience > 1 ? "years" : "year"}
+                  </td>
                   <td>
                     <Link to={`/update/${employee._id}`}>
                       <button type="button">Update</button>
@@ -109,6 +113,7 @@ function EmployeeTable({
                     <td>{employee.name}</td>
                     <td>{employee.level}</td>
                     <td>{employee.position}</td>
+                    <td>{employee.experience}</td>
                     <td>
                       <Link to={`/update/${employee._id}`}>
                         <button type="button">Update</button>

@@ -19,6 +19,8 @@ import EquipmentUpdater from "./Pages/EquipmentUpdater";
 import SearchResults from "./Pages/SearchResultList";
 import Missing from "./Pages/Missing";
 import EmployeeBonuses from "./Pages/EmployeeBonuses";
+import Experience from "./Pages/Experience";
+import PageNotFound from "./Pages/PageNotFound";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,14 @@ const router = createBrowserRouter([
       {
         path: "/bonus/:employeeId",
         element: <EmployeeBonuses />,
+      },
+      {
+        path: "/years-of-experience/:number",
+        element: <Experience />,
+      },
+      {
+        path: "*",
+        element: <PageNotFound />,
       },
    ],
   },

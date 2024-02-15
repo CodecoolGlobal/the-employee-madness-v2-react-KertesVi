@@ -41,6 +41,7 @@ const populateEmployees = async () => {
       level: pick(levels),
       position: pick(positions),
       favoriteBrand: randomBrand._id,
+      experience: parseInt(Math.random()*10)
     };
   });
 

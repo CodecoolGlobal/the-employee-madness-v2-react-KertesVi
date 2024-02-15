@@ -32,6 +32,9 @@ const EmployeeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "FavoriteBrand",
   },
+  experience:{
+    type: Number,
+  }
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

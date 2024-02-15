@@ -12,7 +12,8 @@ const EmployeeForm = ({
   const [level, setLevel] = useState(employee?.level ?? "");
   const [position, setPosition] = useState(employee?.position ?? "");
   const [selectedEquipment, setSelectedEquipment] = useState("");
-
+  const [experience, setExperience] = useState(employee?.experience ?? 0)
+console.log(experience)
   const onSubmit = (e) => {
     e.preventDefault();
     let updatedEquipments = [];
@@ -30,6 +31,7 @@ const EmployeeForm = ({
           level,
           position,
           updatedEquipments,
+          experience,
         });
       }
 
@@ -38,6 +40,7 @@ const EmployeeForm = ({
         level,
         position,
         updatedEquipments,
+        experience,
       });
     } else {
       if (employee) {
@@ -46,6 +49,7 @@ const EmployeeForm = ({
           name,
           level,
           position,
+          experience,
         });
       }
 
@@ -53,6 +57,7 @@ const EmployeeForm = ({
         name,
         level,
         position,
+        experience,
       });
     }
   };
@@ -120,6 +125,14 @@ const EmployeeForm = ({
           id="position"
         />
       </div>
+
+    <div className="control">
+    {employee.level !== "Junior" ?
+    (<>
+      <label>Experience:</label>
+      <input type="number" onChange={(e)=> setExperience(e.target.value)} value={experience}/>
+      </>): null}
+    </div>
 
       <div className="control">
         <label htmlFor="FavoriteBrand">FavoriteBrand:</label>
