@@ -73,7 +73,7 @@ const router = createBrowserRouter([
         element: <EmployeeBonuses />,
       },
       {
-        path: "/years-of-experience/:number",
+        path: "/years-of-experience/:experience",
         element: <Experience />,
       },
       {

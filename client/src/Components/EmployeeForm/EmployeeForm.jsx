@@ -13,7 +13,9 @@ const EmployeeForm = ({
   const [position, setPosition] = useState(employee?.position ?? "");
   const [selectedEquipment, setSelectedEquipment] = useState("");
   const [experience, setExperience] = useState(employee?.experience ?? 0)
+
 console.log(experience)
+
   const onSubmit = (e) => {
     e.preventDefault();
     let updatedEquipments = [];
@@ -85,7 +87,7 @@ console.log(experience)
     }
   };
 
-  const getFavBrand = () => {
+  const displayFavBrand = () => {
     for (const brand of brands) {
       if (employee.favoriteBrand === brand._id) {
         return brand.name;
@@ -136,7 +138,7 @@ console.log(experience)
 
       <div className="control">
         <label htmlFor="FavoriteBrand">FavoriteBrand:</label>
-        <p>{getFavBrand()}</p>
+        <p>{displayFavBrand()}</p>
       </div>
 
       {equipments ? (

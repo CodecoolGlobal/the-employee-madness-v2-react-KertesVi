@@ -1,15 +1,11 @@
 import React from "react";
 
-export default function PageNotFound (){
-    return (
-        <div>
-            <h1>404 Error</h1>
-            <h1>Page Not Found</h1>
-        </div>
-    );
-}
+const PageNotFound = () => {
 
-// const resp = await fetch(`/api/years-of-experience/${params}`);
-// if(resp.status === 404){
-//   console.error("not found")
-// }
+  return (
+    <div>
+      <img src="https://as1.ftcdn.net/v2/jpg/01/10/81/58/1000_F_110815822_d919CXVRr9mYZIWRqSM4BFOuJCpYZ4b2.jpg" alt="404PageNotFound"></img>
+    </div>
+  );
+};
+export default PageNotFound;

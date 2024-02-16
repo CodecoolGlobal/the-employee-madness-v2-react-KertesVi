@@ -3,6 +3,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import ExperienceTable from "../Components/Experience/ExperienceTable";
+import PageNotFound from "./PageNotFound";
 
 const fetchEmployees = () => {
   return fetch("/api/employees").then((res) =>
@@ -11,17 +12,14 @@ const fetchEmployees = () => {
 };
 
 export default function Experience(){
-  const { number } = useParams();
+  const { experience } = useParams();
   const [employees, setEmployees] = useState([]);
+  const [validParam, setValidParam] = useState(true)
 
-  const filterExperienceOfEmployees = (employees, params) => {
+  const filterExperienceOfEmployees = (employees, experience) => {
     try {
-      if (params < 0 || isNaN(params) === true) {
-        throw new Error("Invalid Parameter");
-      }    
-
       const filteredEmployees = employees.filter(
-        (employee) => Number(params) < Number(employee.experience)
+        (employee) => Number(experience) < Number(employee.experience)
       );
 
       if (filteredEmployees.length === 0) {
@@ -34,12 +32,22 @@ export default function Experience(){
     }
   };
 
+  const handleError = (params) => {
+    if (params < 0 || isNaN(params) === true) {
+      setValidParam(false)
+    }    
+  }
+
   useEffect(() => {
     fetchEmployees().then((employees) => {
-      setEmployees(filterExperienceOfEmployees(employees, number));
+      setEmployees(filterExperienceOfEmployees(employees, experience));
+      handleError(experience)
     });
-  }, [number]);
+  }, [experience]);
+console.log(validParam)
+console.log(experience)
 
-  return <ExperienceTable employees={employees} />;
+  return validParam ? <ExperienceTable employees={employees} /> : <PageNotFound/>
+  
 };
 
