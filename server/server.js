@@ -62,12 +62,7 @@ app.delete("/api/equipments/:id", async (req, res, next) => {
 
 app.get("/api/employees", async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || PAGE_SIZE;
-
-    const skip = (page - 1) * limit;
-
-    const employees = await EmployeeModel.find().sort({created: "desc"}).skip(skip).limit(limit);
+    const employees = await EmployeeModel.find().sort({created: "desc"}).populate("favoriteBrand");
 
     if (req.query.sortedBy === "Level") {
       const levels = { Junior: 1, Medior: 2, Senior: 3, Expert: 4, Godlike: 5 };
@@ -134,7 +129,7 @@ app.get("/api/missing", async (req, res) => {
 });
 
 app.get("/api/employees/:id", async (req, res) => {
-  const employee = await EmployeeModel.findById(req.params.id);
+  const employee = await EmployeeModel.findById(req.params.id).populate("favoriteBrand");
   return res.json(employee);
 });
 

@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./EmployeeTable.css";
+import { useNavigate } from "react-router-dom";
 
 function EmployeeTable({
   employees,
   onDelete,
   setOrder,
   order,
-  page,
-  setPage,
-}) {
+ }) {
   const [searched, setSearched] = useState("");
+  const navigate = useNavigate();
 
   function handleSearch(e) {
     setSearched(e.target.value);
@@ -46,7 +46,7 @@ function EmployeeTable({
         <thead>
           <tr>
             <th>
-              <button>present</button>
+              <button onClick={() => navigate(`/missing`)}>present</button>
               <button onClick={() => handleOrder("Name")}>
                 Name {handleArrow("Name")}
               </button>

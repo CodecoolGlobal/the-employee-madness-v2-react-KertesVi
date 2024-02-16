@@ -3,11 +3,9 @@ import Loading from "../Components/Loading";
 import EmployeeTable from "../Components/EmployeeTable";
 import Pagination from "../Components/Pagination";
 
-
-const fetchEmployees = (page, sortedBy, order) => {
+const fetchEmployees = (sortedBy, order) => {
   if (sortedBy === "" && order === "") {
-    
-    return fetch(`/api/employees?page=${page}&limit=PAGE_SIZE`).then((res) => res.json());
+    return fetch(`/api/employees`).then((res) => res.json());
   }
   const query = new URLSearchParams({ sortedBy: sortedBy, order: order });
   return fetch(`/api/employees?${query}`).then((res) => res.json());
@@ -29,42 +27,37 @@ const EmployeeList = () => {
   const [page, setPage] = useState(1);
 
   const handleDelete = (id) => {
-    const isConfirmed = window.confirm(`Are you sure you want to cancel?`)
-    if (isConfirmed){
-    deleteEmployee(id);
+    const isConfirmed = window.confirm(`Are you sure you want to cancel?`);
+    if (isConfirmed) {
+      deleteEmployee(id);
 
-    setEmployees((employees) => {
-      return employees.filter((employee) => employee._id !== id);
-    });
-  }
+      setEmployees((employees) => {
+        return employees.filter((employee) => employee._id !== id);
+      });
+    }
   };
 
-
   useEffect(() => {
-    fetchEmployees(page, order.sortedBy, order.order).then((employees) => {
+    fetchEmployees(order.sortedBy, order.order).then((employees) => {
       setLoading(false);
       setEmployees(employees);
     });
-  }, [page, order.order, order.sortedBy]);
+  }, [order.order, order.sortedBy]);
 
   if (loading) {
     return <Loading />;
   }
-
+  console.log(page)
   return (
     <>
-    <EmployeeTable
-      employees={employees}
-      setOrder={setOrder}
-      order={order}
-      onDelete={handleDelete}
-    />
-     <Pagination 
-     employees={employees}
-     setPage={setPage}
-     page={page}
-     />
-     </>
+      <EmployeeTable
+        employees={employees}
+        setOrder={setOrder}
+        order={order}
+        onDelete={handleDelete}
+      />
+      <Pagination employeeTotal={employees.length} setPage={setPage} page={page} />
+    </>
   );
 };
 

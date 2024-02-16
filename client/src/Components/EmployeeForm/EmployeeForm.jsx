@@ -96,7 +96,7 @@ const EmployeeForm = ({
       }
     }
   };
-  console.log(favBrandId);
+
   return (
     <form className="EmployeeForm" onSubmit={onSubmit}>
       <div className="control">
@@ -149,7 +149,7 @@ const EmployeeForm = ({
                   <li key={index}>
                     {equipment.name}
                     <button onClick={() => removeEquipment(equipment._id)}>
-                      ❌
+                      - ❌
                     </button>
                   </li>
                 ))

@@ -1,8 +1,11 @@
 import React from "react";
 
-export default function Pagination({ page, setPage, employees }) {
+export default function Pagination({ page, setPage, employeeTotal }) {
+  console.log(employeeTotal);
+  console.log(page);
+
   const handleNextPage = () => {
-    if (page < employees.length) {
+    if (page < employeeTotal/10) {
       setPage(page + 1);
     }
   };
@@ -18,8 +21,11 @@ export default function Pagination({ page, setPage, employees }) {
   };
 
   const handleLast = () => {
-    setPage(employees.length);
+    if (page < employeeTotal/10) {
+      setPage(employeeTotal / 10);
+    }
   };
+  console.log(page);
 
   return (
     <div>
