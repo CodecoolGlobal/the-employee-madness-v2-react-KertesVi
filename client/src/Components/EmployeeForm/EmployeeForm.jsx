@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeForm = ({
   onSave,
@@ -8,6 +9,7 @@ const EmployeeForm = ({
   equipments,
   brands,
 }) => {
+  const navigate = useNavigate();
   const [name, setName] = useState(employee?.name ?? "");
   const [level, setLevel] = useState(employee?.level ?? "");
   const [position, setPosition] = useState(employee?.position ?? "");
@@ -71,7 +73,8 @@ const EmployeeForm = ({
       if (index !== -1) {
         employee.equipments.splice(index, 1);
         alert("Equipment removed successfully");
-        console.log(employee);
+        console.log(employee)
+        navigate(`/update/${employee._id}`);
       } else {
         console.log("Equipment not found");
       }
@@ -129,16 +132,18 @@ const EmployeeForm = ({
       {equipments ? (
         <div className="control">
           <label htmlFor="equipments">Equipments:</label>
+          <ul>
           {employee.equipments.length > 0
             ? employee.equipments.map((equipment, index) => (
-                <p key={index}>
+                <li key={index}>
                   {equipment.name}
                   <button onClick={() => removeEquipment(equipment._id)}>
                     ❌
                   </button>
-                </p>
+                </li>
               ))
             : null}
+            </ul>
           <select id="equipmentList" onChange={handleEquipmentChange}>
             <option>Select an equipment</option>
             {equipments.map((equipment, index) => (
