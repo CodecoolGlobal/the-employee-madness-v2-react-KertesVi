@@ -41,7 +41,14 @@ const EmployeeUpdater = () => {
     fetchEmployee(id).then((employee) => {
       setEmployee(employee);
       fetchEquipments().then((equipments) => setEquipments(equipments));
-      fetchBrands().then((brands) => setBrands(brands));
+      fetchBrands().then((brands) =>
+        setBrands(
+          brands.map((nextBrand) => ({
+            label: nextBrand.name,
+            value: nextBrand._id,
+          }))
+        )
+      );
       setEmployeeLoading(false);
     });
   }, [id]);

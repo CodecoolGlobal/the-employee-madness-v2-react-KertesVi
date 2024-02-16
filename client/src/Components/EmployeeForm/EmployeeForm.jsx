@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 const EmployeeForm = ({
   onSave,
@@ -14,6 +15,7 @@ const EmployeeForm = ({
   const [level, setLevel] = useState(employee?.level ?? "");
   const [position, setPosition] = useState(employee?.position ?? "");
   const [selectedEquipment, setSelectedEquipment] = useState("");
+  const [favBrandId, setFavBrandId] = useState(employee?.favoriteBrand ?? "");
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ const EmployeeForm = ({
           level,
           position,
           updatedEquipments,
+          favoriteBrand: favBrandId,
         });
       }
 
@@ -40,6 +43,7 @@ const EmployeeForm = ({
         level,
         position,
         updatedEquipments,
+        favoriteBrand: favBrandId,
       });
     } else {
       if (employee) {
@@ -48,6 +52,7 @@ const EmployeeForm = ({
           name,
           level,
           position,
+          favoriteBrand: favBrandId,
         });
       }
 
@@ -55,6 +60,7 @@ const EmployeeForm = ({
         name,
         level,
         position,
+        favoriteBrand: favBrandId,
       });
     }
   };
@@ -73,7 +79,7 @@ const EmployeeForm = ({
       if (index !== -1) {
         employee.equipments.splice(index, 1);
         alert("Equipment removed successfully");
-        console.log(employee)
+        console.log(employee);
         navigate(`/update/${employee._id}`);
       } else {
         console.log("Equipment not found");
@@ -83,15 +89,14 @@ const EmployeeForm = ({
     }
   };
 
-  const getFavBrand = () => {
+  const displayFavBrandName = () => {
     for (const brand of brands) {
-      if (employee.favoriteBrand === brand._id) {
-        return brand.name;
+      if (favBrandId === brand.value) {
+        return brand.label;
       }
     }
-    return null; 
   };
-
+  console.log(favBrandId);
   return (
     <form className="EmployeeForm" onSubmit={onSubmit}>
       <div className="control">
@@ -125,25 +130,31 @@ const EmployeeForm = ({
       </div>
 
       <div className="control">
-        <label htmlFor="FavoriteBrand">FavoriteBrand:</label>
-        <p>{getFavBrand()}</p>
+        <label htmlFor="favoriteBrand">
+          FavoriteBrand: <strong>{displayFavBrandName()}</strong>
+        </label>
+        <Select
+          options={brands}
+          defaultValue={favBrandId}
+          onChange={(option) => setFavBrandId(option.value)}
+        />
       </div>
 
       {equipments ? (
         <div className="control">
           <label htmlFor="equipments">Equipments:</label>
           <ul>
-          {employee.equipments.length > 0
-            ? employee.equipments.map((equipment, index) => (
-                <li key={index}>
-                  {equipment.name}
-                  <button onClick={() => removeEquipment(equipment._id)}>
-                    ❌
-                  </button>
-                </li>
-              ))
-            : null}
-            </ul>
+            {employee.equipments.length > 0
+              ? employee.equipments.map((equipment, index) => (
+                  <li key={index}>
+                    {equipment.name}
+                    <button onClick={() => removeEquipment(equipment._id)}>
+                      ❌
+                    </button>
+                  </li>
+                ))
+              : null}
+          </ul>
           <select id="equipmentList" onChange={handleEquipmentChange}>
             <option>Select an equipment</option>
             {equipments.map((equipment, index) => (
