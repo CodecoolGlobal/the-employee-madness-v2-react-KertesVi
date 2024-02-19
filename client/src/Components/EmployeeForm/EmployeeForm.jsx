@@ -23,8 +23,9 @@ const EmployeeForm = ({
     employee?.desiredSalary ?? 0
   );
   const [startDate, setStartDate] = useState(
-    employee?.startDate.split("T")[0] ?? 0);
-
+    employee?.startDate.split("T")[0] ?? new Date().toISOString().split("T")[0]
+  );
+console.log(startDate)
   const onSubmit = (e) => {
     e.preventDefault();
     let updatedEquipments = [];
@@ -125,24 +126,12 @@ const EmployeeForm = ({
     setColor(newColor.hex);
   };
 
-  const handleStartDateChange = (e) => {
-    setStartDate(e.target.value)
-  }
-
-  const handleSalaryChange = (e) => {
-    setSalary(e.target.value)
-  }
-
-  const handleDesiredSalaryChange = (e) => {
-    setDesiredSalary(e.target.value)
-  }
-
   const countDifferenceBetweenSalaryAndDesire = (desiredSalary, salary) => {
-    return desiredSalary - salary
-  }
+    return desiredSalary - salary;
+  };
 
   return (
-    <form className="EmployeeForm" onSubmit={onSubmit} >
+    <form className="EmployeeForm" onSubmit={onSubmit}>
       <div className="control">
         <label htmlFor="name">Name:</label>
         <input
@@ -176,9 +165,9 @@ const EmployeeForm = ({
       <div className="control">
         <label htmlFor="startingDate">Starting Date:</label>
         <input
-        type="date"
+          type="date"
           value={startDate}
-          onChange={handleStartDateChange}
+          onChange={(e) => setStartDate(e.target.value)}
           name="startingDate"
           id="startingDate"
         />
@@ -187,38 +176,42 @@ const EmployeeForm = ({
       <div className="control">
         <label htmlFor="salary">Salary in USD:</label>
         <input
-        type="number"
+          type="number"
           value={salary}
-          onChange={handleSalaryChange}
+          onChange={(e) => setSalary(e.target.value)}
           name="salary"
           id="salary"
         />
-          <label htmlFor="salary">Desired Salary:</label>
+        <label htmlFor="salary">Desired Salary:</label>
         <input
-        type="number"
+          type="number"
           value={desiredSalary}
-          onChange={handleDesiredSalaryChange}
+          onChange={(e) => setDesiredSalary(e.target.value)}
           name="desiredSalary"
           id="desiredSalary"
         />
-        <p>Difference: ${countDifferenceBetweenSalaryAndDesire(desiredSalary, salary)} </p>
+        <p>
+          Difference: $
+          {countDifferenceBetweenSalaryAndDesire(desiredSalary, salary)}{" "}
+        </p>
       </div>
 
       <div style={{ backgroundColor: color }} className="control">
         <label htmlFor="favoriteColor">FavoriteColor: {color}</label>
-       <CirclePicker color={color} onChange={handleColorChange} />
+        <CirclePicker color={color} onChange={handleColorChange} />
       </div>
-
-      <div className="control">
-        <label htmlFor="favoriteBrand">
-          FavoriteBrand: <strong>{displayFavBrandName()}</strong>
-        </label>
-        <Select
-          options={brands}
-          defaultValue={favBrandId}
-          onChange={(option) => setFavBrandId(option.value)}
-        />
-      </div>
+      {brands && (
+        <div className="control">
+          <label htmlFor="favoriteBrand">
+            FavoriteBrand: <strong>{displayFavBrandName()}</strong>
+          </label>
+          <Select
+            options={brands}
+            defaultValue={favBrandId}
+            onChange={(option) => setFavBrandId(option.value)}
+          />
+        </div>
+      )}
 
       {equipments ? (
         <div className="control">

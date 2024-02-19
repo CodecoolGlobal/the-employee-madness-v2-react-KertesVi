@@ -19,11 +19,10 @@ const EmployeeCreator = () => {
   const handleCreateEmployee = (employee) => {
     setLoading(true);
 
-    createEmployee(employee)
-      .then(() => {
-        setLoading(false);
-        navigate("/");
-      })
+    createEmployee(employee).then(() => {
+      setLoading(false);
+      navigate("/");
+    });
   };
 
   return (

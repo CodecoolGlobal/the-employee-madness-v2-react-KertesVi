@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/equipments/", async (req, res) => {
-  const equipments = await EquipmentSchema.find().sort({ created: "desc" });
+  const equipments = await EquipmentSchema.find().sort({ created: "asc" });
   return res.json(equipments);
 });
 
