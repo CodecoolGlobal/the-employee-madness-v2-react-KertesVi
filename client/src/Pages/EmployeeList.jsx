@@ -47,10 +47,11 @@ const EmployeeList = () => {
   if (loading) {
     return <Loading />;
   }
-  console.log(page)
+
   return (
     <>
       <EmployeeTable
+        page={page}
         employees={employees}
         setOrder={setOrder}
         order={order}
