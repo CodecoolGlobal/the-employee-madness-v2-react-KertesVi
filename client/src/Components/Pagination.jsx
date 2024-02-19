@@ -22,7 +22,7 @@ export default function Pagination({ page, setPage, employeeTotal }) {
       setPage(employeeTotal / 10);
     }
   };
-  console.log(page);
+
 
   return (
     <div>

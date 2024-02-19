@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { CirclePicker } from "react-color";
 
 const EmployeeForm = ({
   onSave,
@@ -16,6 +17,16 @@ const EmployeeForm = ({
   const [position, setPosition] = useState(employee?.position ?? "");
   const [selectedEquipment, setSelectedEquipment] = useState("");
   const [favBrandId, setFavBrandId] = useState(employee?.favoriteBrand ?? "");
+  const [color, setColor] = useState(employee?.color ?? "#FFFFFF");
+  const [salary, setSalary] = useState(employee?.salary ?? 0);
+  const [desiredSalary, setDesiredSalary] = useState(
+    employee?.desiredSalary ?? 0
+  );
+  const [startingDate, setStartingDate] = useState(
+    employee?.startingDate ?? new Date()
+  );
+
+  console.log(color);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -35,6 +46,7 @@ const EmployeeForm = ({
           position,
           updatedEquipments,
           favoriteBrand: favBrandId,
+          color: color,
         });
       }
 
@@ -44,6 +56,7 @@ const EmployeeForm = ({
         position,
         updatedEquipments,
         favoriteBrand: favBrandId,
+        color: color,
       });
     } else {
       if (employee) {
@@ -53,6 +66,7 @@ const EmployeeForm = ({
           level,
           position,
           favoriteBrand: favBrandId,
+          color: color,
         });
       }
 
@@ -61,6 +75,7 @@ const EmployeeForm = ({
         level,
         position,
         favoriteBrand: favBrandId,
+        color: color,
       });
     }
   };
@@ -97,8 +112,12 @@ const EmployeeForm = ({
     }
   };
 
+  const handleColorChange = (newColor) => {
+    setColor(newColor.hex);
+  };
+
   return (
-    <form className="EmployeeForm" onSubmit={onSubmit}>
+    <form className="EmployeeForm" onSubmit={onSubmit} >
       <div className="control">
         <label htmlFor="name">Name:</label>
         <input
@@ -129,6 +148,11 @@ const EmployeeForm = ({
         />
       </div>
 
+      <div style={{ backgroundColor: color }} className="control">
+        <label htmlFor="favoriteColor">FavoriteColor: {color}</label>
+       <CirclePicker color={color} onChange={handleColorChange} />
+      </div>
+
       <div className="control">
         <label htmlFor="favoriteBrand">
           FavoriteBrand: <strong>{displayFavBrandName()}</strong>
@@ -149,7 +173,7 @@ const EmployeeForm = ({
                   <li key={index}>
                     {equipment.name}
                     <button onClick={() => removeEquipment(equipment._id)}>
-                      - ❌
+                      ❌
                     </button>
                   </li>
                 ))

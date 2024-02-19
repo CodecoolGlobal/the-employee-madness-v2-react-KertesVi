@@ -17,21 +17,24 @@ const EmployeeSchema = new Schema({
   },
   bonuses: [
     {
-      value :  Number,
+      value: Number,
       createdAt: { type: Date, default: new Date().toISOString() },
     },
   ],
   equipments: [
     {
-      name :  String,
-      createdAt: { type: Date, default: new Date().toISOString()},
-      returnedAt: { type: Date},
+      name: String,
+      createdAt: { type: Date, default: new Date().toISOString() },
     },
   ],
   favoriteBrand: {
     type: Schema.Types.ObjectId,
     ref: "FavoriteBrand",
   },
+  color: String,
+  startingDate: Date,
+  salary: Number,
+  desiredSalary: Number,
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

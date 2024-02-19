@@ -6,7 +6,6 @@ const EquipmentSchema = require("./db/equipment.model");
 const FavoriteBrandSchema = require("./db/favoriteBrand.model");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
-const PAGE_SIZE = 10;
 
 if (!MONGO_URL) {
   console.error("Missing MONGO_URL environment variable");
@@ -62,7 +61,7 @@ app.delete("/api/equipments/:id", async (req, res, next) => {
 
 app.get("/api/employees", async (req, res) => {
   try {
-    const employees = await EmployeeModel.find().sort({created: "desc"}).populate("favoriteBrand");
+    const employees = await EmployeeModel.find().sort({created: "desc"});
 
     if (req.query.sortedBy === "Level") {
       const levels = { Junior: 1, Medior: 2, Senior: 3, Expert: 4, Godlike: 5 };
@@ -129,7 +128,7 @@ app.get("/api/missing", async (req, res) => {
 });
 
 app.get("/api/employees/:id", async (req, res) => {
-  const employee = await EmployeeModel.findById(req.params.id).populate("favoriteBrand");
+  const employee = await EmployeeModel.findById(req.params.id);
   return res.json(employee);
 });
 
