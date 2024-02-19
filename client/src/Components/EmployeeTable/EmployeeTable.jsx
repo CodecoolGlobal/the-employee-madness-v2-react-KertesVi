@@ -46,7 +46,9 @@ function EmployeeTable({
         <thead>
           <tr>
             <th>
-              <button onClick={() => navigate(`/missing`)}>present</button>
+              <button onClick={() => navigate(`/missing`)}>Present</button>
+              </th>
+              <th>
               <button onClick={() => handleOrder("Name")}>
                 Name {handleArrow("Name")}
               </button>
@@ -82,6 +84,8 @@ function EmployeeTable({
                       id={employee._id}
                       className="present"
                     ></input>
+                    </td>
+                    <td>
                     {employee.name}
                   </td>
                   <td>{employee.level}</td>
