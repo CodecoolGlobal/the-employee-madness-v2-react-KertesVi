@@ -19,6 +19,7 @@ import EquipmentUpdater from "./Pages/EquipmentUpdater";
 import SearchResults from "./Pages/SearchResultList";
 import Missing from "./Pages/Missing";
 import EmployeeBonuses from "./Pages/EmployeeBonuses";
+import TopPaidEmployees from "./Pages/TopPaidEmployees";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,11 @@ const router = createBrowserRouter([
         path: "/bonus/:employeeId",
         element: <EmployeeBonuses />,
       },
+      {
+        path: "top-paid",
+        element: <TopPaidEmployees />,
+      },
+     
    ],
   },
 ]);
