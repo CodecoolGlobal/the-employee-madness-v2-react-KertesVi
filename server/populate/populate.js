@@ -30,17 +30,31 @@ const populateFavBrands = async () => {
   console.log("favorites created");
 };
 
+function randomDate(start, end) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+function getRandomInt(min, max) {
+  const minCeiled = Math.ceil(min);
+  const maxFloored = Math.floor(max);
+  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+}
+
 const populateEmployees = async () => {
   await EmployeeModel.deleteMany({});
   const brandDocs = await FavoriteBrandModel.find({});
-
+  
   const employees = names.map((name) => {
     const randomBrand = pick(brandDocs);
+    const startDate = randomDate(new Date(2012, 0, 1), new Date());
     return {
       name,
       level: pick(levels),
       position: pick(positions),
       favoriteBrand: randomBrand._id,
+      startDate: startDate.toISOString(),
+      salary: getRandomInt(500, 1500),
+      desiredSalary: getRandomInt(1000, 3000)
     };
   });
 

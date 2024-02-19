@@ -32,7 +32,7 @@ const EmployeeSchema = new Schema({
     ref: "FavoriteBrand",
   },
   color: String,
-  startingDate: Date,
+  startDate: {type: Date, default: "0000-00-00"},
   salary: Number,
   desiredSalary: Number,
 });

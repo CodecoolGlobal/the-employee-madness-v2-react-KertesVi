@@ -22,11 +22,11 @@ const EmployeeForm = ({
   const [desiredSalary, setDesiredSalary] = useState(
     employee?.desiredSalary ?? 0
   );
-  const [startingDate, setStartingDate] = useState(
-    employee?.startingDate ?? new Date()
-  );
+  const [startDate, setStartDate] = useState(
+    employee?.startDate.split("T")[0] ?? 0);
 
-  console.log(color);
+console.log(salary)
+console.log(desiredSalary)
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -47,6 +47,9 @@ const EmployeeForm = ({
           updatedEquipments,
           favoriteBrand: favBrandId,
           color: color,
+          startDate: startDate,
+          salary: salary,
+          desiredSalary: desiredSalary,
         });
       }
 
@@ -57,6 +60,9 @@ const EmployeeForm = ({
         updatedEquipments,
         favoriteBrand: favBrandId,
         color: color,
+        startDate: startDate,
+        salary: salary,
+        desiredSalary: desiredSalary,
       });
     } else {
       if (employee) {
@@ -67,6 +73,9 @@ const EmployeeForm = ({
           position,
           favoriteBrand: favBrandId,
           color: color,
+          startDate: startDate,
+          salary: salary,
+          desiredSalary: desiredSalary,
         });
       }
 
@@ -76,6 +85,9 @@ const EmployeeForm = ({
         position,
         favoriteBrand: favBrandId,
         color: color,
+        startDate: startDate,
+        salary: salary,
+        desiredSalary: desiredSalary,
       });
     }
   };
@@ -116,6 +128,22 @@ const EmployeeForm = ({
     setColor(newColor.hex);
   };
 
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value)
+  }
+
+  const handleSalaryChange = (e) => {
+    setSalary(e.target.value)
+  }
+
+  const handleDesiredSalaryChange = (e) => {
+    setDesiredSalary(e.target.value)
+  }
+
+  const countDifferenceBetweenSalaryAndDesire = (desiredSalary, salary) => {
+    return desiredSalary - salary
+  }
+
   return (
     <form className="EmployeeForm" onSubmit={onSubmit} >
       <div className="control">
@@ -146,6 +174,37 @@ const EmployeeForm = ({
           name="position"
           id="position"
         />
+      </div>
+
+      <div className="control">
+        <label htmlFor="startingDate">Starting Date:</label>
+        <input
+        type="date"
+          value={startDate}
+          onChange={handleStartDateChange}
+          name="startingDate"
+          id="startingDate"
+        />
+      </div>
+
+      <div className="control">
+        <label htmlFor="salary">Salary in USD:</label>
+        <input
+        type="number"
+          value={salary}
+          onChange={handleSalaryChange}
+          name="salary"
+          id="salary"
+        />
+          <label htmlFor="salary">Desired Salary:</label>
+        <input
+        type="number"
+          value={desiredSalary}
+          onChange={handleDesiredSalaryChange}
+          name="desiredSalary"
+          id="desiredSalary"
+        />
+        <p>Difference: ${countDifferenceBetweenSalaryAndDesire(desiredSalary, salary)} </p>
       </div>
 
       <div style={{ backgroundColor: color }} className="control">

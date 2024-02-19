@@ -57,6 +57,7 @@ const EmployeeUpdater = () => {
     setUpdateLoading(true);
     updateEmployee(employee).then(() => {
       setUpdateLoading(false);
+      alert("Employee updated")
       navigate(`/update/${employee._id}`);
     });
   };
