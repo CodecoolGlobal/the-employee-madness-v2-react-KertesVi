@@ -32,9 +32,10 @@ const EmployeeSchema = new Schema({
     ref: "FavoriteBrand",
   },
   color: String,
-  startDate: {type: Date, default: "0000-00-00"},
+  startDate: Date,
   salary: Number,
   desiredSalary: Number,
+  division: Schema.Types.ObjectId,
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

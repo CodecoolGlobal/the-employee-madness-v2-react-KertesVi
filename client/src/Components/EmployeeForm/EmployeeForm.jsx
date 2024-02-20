@@ -81,7 +81,6 @@ console.log(startDate)
         name,
         level,
         position,
-        favoriteBrand: favBrandId,
         color: color,
         startDate: startDate,
         salary: salary,
