@@ -37,7 +37,7 @@ function randomDate(start, end) {
 function getRandomInt(min, max) {
   const minCeiled = Math.ceil(min);
   const maxFloored = Math.floor(max);
-  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
 }
 
 const populateEmployees = async () => {
@@ -54,7 +54,8 @@ const populateEmployees = async () => {
       favoriteBrand: randomBrand._id,
       startDate: startDate.toISOString(),
       salary: getRandomInt(500, 1500),
-      desiredSalary: getRandomInt(1000, 3000)
+      desiredSalary: getRandomInt(1000, 3000),
+      equipments: [],
     };
   });
 

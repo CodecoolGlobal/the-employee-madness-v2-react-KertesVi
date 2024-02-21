@@ -19,13 +19,9 @@ const EmployeeForm = ({
   const [favBrandId, setFavBrandId] = useState(employee?.favoriteBrand ?? "");
   const [color, setColor] = useState(employee?.color ?? "#FFFFFF");
   const [salary, setSalary] = useState(employee?.salary ?? 0);
-  const [desiredSalary, setDesiredSalary] = useState(
-    employee?.desiredSalary ?? 0
-  );
-  const [startDate, setStartDate] = useState(
-    employee?.startDate.split("T")[0] ?? new Date().toISOString().split("T")[0]
-  );
-console.log(startDate)
+  const [desiredSalary, setDesiredSalary] = useState(employee?.desiredSalary ?? 0);
+  const [startDate, setStartDate] = useState(employee?.startDate.split("T")[0] ?? new Date().toISOString().split("T")[0]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     let updatedEquipments = [];
@@ -89,11 +85,6 @@ console.log(startDate)
     }
   };
 
-  const handleEquipmentChange = (e) => {
-    e.preventDefault();
-    setSelectedEquipment(e.target.value);
-  };
-
   const removeEquipment = (id) => {
     if (employee && Array.isArray(employee.equipments)) {
       const index = employee.equipments.findIndex(
@@ -103,7 +94,6 @@ console.log(startDate)
       if (index !== -1) {
         employee.equipments.splice(index, 1);
         alert("Equipment removed successfully");
-        console.log(employee);
         navigate(`/update/${employee._id}`);
       } else {
         console.log("Equipment not found");
@@ -119,14 +109,6 @@ console.log(startDate)
         return brand.label;
       }
     }
-  };
-
-  const handleColorChange = (newColor) => {
-    setColor(newColor.hex);
-  };
-
-  const countDifferenceBetweenSalaryAndDesire = (desiredSalary, salary) => {
-    return desiredSalary - salary;
   };
 
   return (
@@ -189,20 +171,21 @@ console.log(startDate)
           name="desiredSalary"
           id="desiredSalary"
         />
-        <p>
-          Difference: $
-          {countDifferenceBetweenSalaryAndDesire(desiredSalary, salary)}{" "}
-        </p>
+        <p>Difference: $ {desiredSalary - salary}</p>
       </div>
 
       <div style={{ backgroundColor: color }} className="control">
-        <label htmlFor="favoriteColor">FavoriteColor: {color}</label>
-        <CirclePicker color={color} onChange={handleColorChange} />
+        <label htmlFor="favoriteColor">Favorite Color: Hex {color}</label>
+        <CirclePicker
+          color={color}
+          onChange={(newColor) => setColor(newColor.hex)}
+        />
       </div>
-      {brands && (
+
+      {brands && 
         <div className="control">
           <label htmlFor="favoriteBrand">
-            FavoriteBrand: <strong>{displayFavBrandName()}</strong>
+            Favorite Brand: <strong>{displayFavBrandName()}</strong>
           </label>
           <Select
             options={brands}
@@ -210,25 +193,26 @@ console.log(startDate)
             onChange={(option) => setFavBrandId(option.value)}
           />
         </div>
-      )}
-
-      {equipments ? (
+      }
+      {equipments && 
         <div className="control">
           <label htmlFor="equipments">Equipments:</label>
           <ul>
-            {employee.equipments.length > 0
-              ? employee.equipments.map((equipment, index) => (
-                  <li key={index}>
-                    {equipment.name}
-                    <button onClick={() => removeEquipment(equipment._id)}>
-                      ❌
-                    </button>
-                  </li>
-                ))
-              : null}
+            {employee.equipments.length > 0 &&
+              employee.equipments.map((equipment, index) => (
+                <li key={index}>
+                  {equipment.name}
+                  <button onClick={() => removeEquipment(equipment._id)}>
+                    ❌
+                  </button>
+                </li>
+              ))}
           </ul>
-          <select id="equipmentList" onChange={handleEquipmentChange}>
-            <option>Select an equipment</option>
+          <select
+            id="equipmentList"
+            onChange={(e) => setSelectedEquipment(e.target.value)}
+          >
+            <option>Select an equipment...</option>
             {equipments.map((equipment, index) => (
               <option key={index} name={equipment.name}>
                 {equipment.name}
@@ -236,7 +220,8 @@ console.log(startDate)
             ))}
           </select>
         </div>
-      ) : null}
+      }
+
       <div className="buttons">
         <button type="submit" disabled={disabled}>
           {employee ? "Update Employee" : "Create Employee"}

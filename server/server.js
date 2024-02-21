@@ -66,21 +66,21 @@ app.get("/api/employees", async (req, res) => {
     if (req.query.sortedBy === "Level") {
       const levels = { Junior: 1, Medior: 2, Senior: 3, Expert: 4, Godlike: 5 };
       employees.sort((a, b) =>
-        req.query.order == "asc"
+        req.query.order === "asc"
           ? levels[a.level] - levels[b.level]
           : levels[b.level] - levels[a.level]
       );
       return res.json(employees);
     } else if (req.query.sortedBy === "Name") {
       employees.sort((a, b) =>
-        req.query.order == "asc"
+        req.query.order === "asc"
           ? a.name.toLowerCase().localeCompare(b.name.toLowerCase())
           : b.name.toLowerCase().localeCompare(a.name.toLowerCase())
       );
       return res.json(employees);
     } else if (req.query.sortedBy === "Position") {
       employees.sort((a, b) =>
-        req.query.order == "asc"
+        req.query.order === "asc"
           ? a.position.toLowerCase().localeCompare(b.position.toLowerCase())
           : b.position.toLowerCase().localeCompare(a.position.toLowerCase())
       );
@@ -113,11 +113,11 @@ app.patch("/api/bonus/:employeeId", async (req, res, next) => {
 })
 
 app.get("/api/missing", async (req, res) => {
-  const presentDate = new Date();
-  const presentDateString = presentDate.toISOString().split("T")[0];
-  try {
+  const presentDate = new Date().toISOString().split("T")[0];
+
+   try {
     const missingEmployees = await EmployeeModel.find({
-      present: { $not: { $eq: presentDateString } },
+      present: { $not: { $eq: presentDate } },
     });
 
     return res.json(missingEmployees);

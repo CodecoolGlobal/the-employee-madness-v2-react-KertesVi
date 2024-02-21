@@ -12,7 +12,7 @@ const EmployeeSchema = new Schema({
     default: Date.now,
   },
   present: {
-    type: String,
+    type: Date,
     default: new Date().toISOString(),
   },
   bonuses: [

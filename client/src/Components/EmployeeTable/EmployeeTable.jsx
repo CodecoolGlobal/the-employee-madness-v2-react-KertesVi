@@ -10,9 +10,6 @@ function EmployeeTable({ page, employees, onDelete, setOrder, order }) {
   const startIndex = (page - 1) * employeePerPage;
   const endIndex = page * employeePerPage;
 
-  function handleSearch(e) {
-    setSearched(e.target.value);
-  }
 
   function handleOrder(orderBy) {
     setOrder({
@@ -26,17 +23,20 @@ function EmployeeTable({ page, employees, onDelete, setOrder, order }) {
     return order.sortedBy === orderBy && (order.order === "asc" ? "⬇" : "⬆");
   }
 
+
   const handlePresent = (id) => {
-    const presentDate = new Date(); 
-    const presentDateString = presentDate.toISOString().split("T")[0];
+    const presentDate = new Date().toISOString().split("T")[0];
+
+console.log(presentDate)
     return fetch(`/api/employees/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ present: presentDateString }),
+      body: JSON.stringify({ present: presentDate }),
     }).then((res) => res.json());
   };
+
 
   return (
     <div className="EmployeeTable">
@@ -63,8 +63,8 @@ function EmployeeTable({ page, employees, onDelete, setOrder, order }) {
             </th>
             <th>
               <input
-                onChange={handleSearch}
-                placeholder="Search by level or position"
+                onChange={(e) => setSearched(e.target.value)}
+                placeholder="Search..."
               ></input>
             </th>
 

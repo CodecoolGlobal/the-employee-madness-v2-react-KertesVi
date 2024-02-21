@@ -8,16 +8,16 @@ export default function TopPaidEmployees() {
     return fetch(`/api/employees`).then((res) => res.json());
   };
 
+  const sortTopEmployeeSalary = (employees) => {
+    return employees.sort((a, b) => b.salary - a.salary);
+  };
+
   useEffect(() => {
     fetchEmployees().then((employees) => {
       const sortedEmployees = sortTopEmployeeSalary(employees);
       setEmployees(sortedEmployees);
     });
   }, []);
-
-  const sortTopEmployeeSalary = (employees) => {
-    return employees.sort((a, b) => b.salary - a.salary);
-  };
 
   const countDeferenceBetweenPreviousEmployee = (employees) => {
     const differences = [];
