@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Loading from "../Components/Loading";
 import EmployeeTable from "../Components/EmployeeTable";
 import { useParams } from "react-router-dom";
+import Pagination from "../Components/Pagination";
 
 const fetchEmployees = (search, sortedBy, order) => {
   if (!search) {
@@ -32,6 +33,7 @@ export default function SearchResultList() {
     sortedBy: "",
     order: "",
   });
+  const [page, setPage] = useState(1);
 
   const handleDelete = (id) => {
     deleteEmployee(id);
@@ -41,8 +43,7 @@ export default function SearchResultList() {
   };
 
   useEffect(() => {
-    fetchEmployees(search, order.sortedBy, order.order)
-    .then((employees) => {
+    fetchEmployees(search, order.sortedBy, order.order).then((employees) => {
       setLoading(false);
       setEmployees(employees);
     });
@@ -53,11 +54,19 @@ export default function SearchResultList() {
   }
 
   return (
-    <EmployeeTable
-      setOrder={setOrder}
-      order={order}
-      employees={employees}
-      onDelete={handleDelete}
-    />
+    <>
+      <EmployeeTable
+        page={page}
+        setOrder={setOrder}
+        order={order}
+        employees={employees}
+        onDelete={handleDelete}
+      />
+      <Pagination
+        employeeTotal={employees.length}
+        setPage={setPage}
+        page={page}
+      />
+    </>
   );
 }

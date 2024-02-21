@@ -154,6 +154,7 @@ app.get("/api/search/:search", async (req, res) => {
       );
       return res.json(employees);
     }
+    return res.json(employees);
   } catch (error) {
     console.error("Error fetching employees: ", error);
     res.status(500).json({ error: "Internal Server Error" });
