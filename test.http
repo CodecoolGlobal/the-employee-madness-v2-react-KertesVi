@@ -4,6 +4,24 @@ GET http://localhost:8080/api/missing/
 GET http://localhost:8080/api/search/robert
 
 ###
+
+
+GET http://localhost:8080/api/divisions
+
+###
+POST http://localhost:8080/api/divisions
+Content-Type: application/json
+
+{
+  "name": "HR",
+  "budget": 5000000,
+  "location": {
+      "city": "Budapest",
+      "country": "Hungary"
+  }
+}
+
+###
 POST http://localhost:8080/api/employees/
 Content-Type: application/json
 

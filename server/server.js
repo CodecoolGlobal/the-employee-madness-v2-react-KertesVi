@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const EmployeeModel = require("./db/employee.model");
 const EquipmentSchema = require("./db/equipment.model");
 const FavoriteBrandSchema = require("./db/favoriteBrand.model");
+const DivisionSchema = require("./db/division.model");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 
@@ -18,6 +19,26 @@ app.use(express.json());
 app.get("/api/equipments/", async (req, res) => {
   const equipments = await EquipmentSchema.find().sort({ created: "asc" });
   return res.json(equipments);
+});
+
+app.get("/api/divisions", async (req, res, next) => {
+  try {
+    const divisions = await DivisionSchema.find();
+    return res.json(divisions);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+app.post("/api/divisions", async (req, res, next) => {
+    const division = req.body;
+
+    try {
+      const saved = await DivisionSchema.create(division);
+      res.json(saved);
+    } catch (error) {
+      return next(error);
+    }
 });
 
 app.get("/api/equipments/:id", async (req, res) => {
@@ -61,7 +82,7 @@ app.delete("/api/equipments/:id", async (req, res, next) => {
 
 app.get("/api/employees", async (req, res) => {
   try {
-    const employees = await EmployeeModel.find().sort({created: "desc"});
+    const employees = await EmployeeModel.find().sort({ created: "desc" });
 
     if (req.query.sortedBy === "Level") {
       const levels = { Junior: 1, Medior: 2, Senior: 3, Expert: 4, Godlike: 5 };
@@ -95,27 +116,27 @@ app.get("/api/employees", async (req, res) => {
 });
 
 app.get("/api/brands/", async (req, res) => {
-  const brands = await FavoriteBrandSchema.find()
+  const brands = await FavoriteBrandSchema.find();
   return res.json(brands);
 });
 
 app.patch("/api/bonus/:employeeId", async (req, res, next) => {
   try {
     const employee = await EmployeeModel.findByIdAndUpdate(
-      { _id : req.params.employeeId },
-      { $push: {bonuses: {value: req.body.value}}},
-      { new: true}
-      )
-      return res.json(employee)
+      { _id: req.params.employeeId },
+      { $push: { bonuses: { value: req.body.value } } },
+      { new: true }
+    );
+    return res.json(employee);
   } catch (error) {
-    return next(error)
+    return next(error);
   }
-})
+});
 
 app.get("/api/missing", async (req, res) => {
   const presentDate = new Date().toISOString().split("T")[0];
 
-   try {
+  try {
     const missingEmployees = await EmployeeModel.find({
       present: { $not: { $eq: presentDate } },
     });

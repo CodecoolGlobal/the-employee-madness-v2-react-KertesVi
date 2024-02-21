@@ -19,6 +19,16 @@ if (!mongoUrl) {
 
 const pick = (from) => from[Math.floor(Math.random() * (from.length - 0))];
 
+function randomDate(start, end) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+function getRandomInt(min, max) {
+  const minCeiled = Math.ceil(min);
+  const maxFloored = Math.floor(max);
+  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+}
+
 const populateFavBrands = async () => {
   await FavoriteBrandModel.deleteMany({});
 
@@ -29,16 +39,6 @@ const populateFavBrands = async () => {
   await FavoriteBrandModel.create(...favorites);
   console.log("favorites created");
 };
-
-function randomDate(start, end) {
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
-
-function getRandomInt(min, max) {
-  const minCeiled = Math.ceil(min);
-  const maxFloored = Math.floor(max);
-  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
-}
 
 const populateEmployees = async () => {
   await EmployeeModel.deleteMany({});

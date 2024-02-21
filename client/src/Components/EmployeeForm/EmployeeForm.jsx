@@ -22,6 +22,9 @@ const EmployeeForm = ({
   const [desiredSalary, setDesiredSalary] = useState(employee?.desiredSalary ?? 0);
   const [startDate, setStartDate] = useState(employee?.startDate.split("T")[0] ?? new Date().toISOString().split("T")[0]);
 
+  console.log(brands)
+  console.log(equipments)
+
   const onSubmit = (e) => {
     e.preventDefault();
     let updatedEquipments = [];

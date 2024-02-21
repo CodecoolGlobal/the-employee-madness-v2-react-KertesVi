@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import EmployeeForm from "../Components/EmployeeForm";
+import Loading from "../Components/Loading";
 
 const createEmployee = (employee) => {
   return fetch("/api/employees", {
@@ -12,9 +13,12 @@ const createEmployee = (employee) => {
   }).then((res) => res.json());
 };
 
+
+
 const EmployeeCreator = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
 
   const handleCreateEmployee = (employee) => {
     setLoading(true);
@@ -24,6 +28,8 @@ const EmployeeCreator = () => {
       navigate("/");
     });
   };
+
+
 
   return (
     <EmployeeForm
