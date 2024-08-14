@@ -20,6 +20,7 @@ import SearchResults from "./Pages/SearchResultList";
 import Missing from "./Pages/Missing";
 import EmployeeBonuses from "./Pages/EmployeeBonuses";
 import TopPaidEmployees from "./Pages/TopPaidEmployees";
+import CreateCompany from "./Pages/CreateCompany";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "top-paid",
         element: <TopPaidEmployees />,
+      },
+      {
+        path: "/company",
+        element: <CreateCompany />,
       },
      
    ],

@@ -5,6 +5,8 @@ const EmployeeModel = require("./db/employee.model");
 const EquipmentSchema = require("./db/equipment.model");
 const FavoriteBrandSchema = require("./db/favoriteBrand.model");
 const DivisionSchema = require("./db/division.model");
+const CompanySchema = require("./db/company.model");
+const companyModel = require("./db/company.model");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 
@@ -29,6 +31,25 @@ app.get("/api/divisions", async (req, res, next) => {
     return next(error);
   }
 });
+
+app.get("/api/company", async (req, res, next) => {
+  try {
+    const company = await CompanySchema.find();
+    return res.json(company)
+  } catch (error) {
+    return next(error)
+  }
+})
+
+app.post("/api/company", async (req, res, next) => {
+  const company = req.body;
+  try {
+    const saved = await CompanySchema.create(company)
+    res.json(saved)
+  } catch (error) {
+    return next(error)
+  }
+})
 
 app.post("/api/divisions", async (req, res, next) => {
     const division = req.body;

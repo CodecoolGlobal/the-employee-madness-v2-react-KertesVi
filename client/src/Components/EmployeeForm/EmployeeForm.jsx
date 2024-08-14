@@ -4,6 +4,7 @@ import Select from "react-select";
 import { CirclePicker } from "react-color";
 
 const EmployeeForm = ({
+  companies,
   onSave,
   disabled,
   employee,
@@ -19,11 +20,13 @@ const EmployeeForm = ({
   const [favBrandId, setFavBrandId] = useState(employee?.favoriteBrand ?? "");
   const [color, setColor] = useState(employee?.color ?? "#FFFFFF");
   const [salary, setSalary] = useState(employee?.salary ?? 0);
-  const [desiredSalary, setDesiredSalary] = useState(employee?.desiredSalary ?? 0);
-  const [startDate, setStartDate] = useState(employee?.startDate.split("T")[0] ?? new Date().toISOString().split("T")[0]);
-
-  console.log(brands)
-  console.log(equipments)
+  const [desiredSalary, setDesiredSalary] = useState(
+    employee?.desiredSalary ?? 0
+  );
+  const [startDate, setStartDate] = useState(
+    employee?.startDate.split("T")[0] ?? new Date().toISOString().split("T")[0]
+  );
+  const [prevCompany, setPrevCompany] = useState(employee?.company ?? "")
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -47,6 +50,7 @@ const EmployeeForm = ({
           startDate: startDate,
           salary: salary,
           desiredSalary: desiredSalary,
+          company: prevCompany,
         });
       }
 
@@ -60,6 +64,7 @@ const EmployeeForm = ({
         startDate: startDate,
         salary: salary,
         desiredSalary: desiredSalary,
+        company: prevCompany,
       });
     } else {
       if (employee) {
@@ -73,6 +78,7 @@ const EmployeeForm = ({
           startDate: startDate,
           salary: salary,
           desiredSalary: desiredSalary,
+          company: prevCompany,
         });
       }
 
@@ -84,6 +90,7 @@ const EmployeeForm = ({
         startDate: startDate,
         salary: salary,
         desiredSalary: desiredSalary,
+        company: prevCompany,
       });
     }
   };
@@ -117,7 +124,16 @@ const EmployeeForm = ({
   return (
     <form className="EmployeeForm" onSubmit={onSubmit}>
       <div className="control">
-        <label htmlFor="name">Name:</label>
+        <label htmlFor="copmany">Previous Company: {prevCompany}</label>
+        <Select
+            options={companies}
+            defaultValue={prevCompany}
+            onChange={(option) => setPrevCompany(option.value)}
+          />
+      </div>
+
+      <div className="control">
+        <label htmlFor="name">Name: </label>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -185,7 +201,7 @@ const EmployeeForm = ({
         />
       </div>
 
-      {brands && 
+      {brands && (
         <div className="control">
           <label htmlFor="favoriteBrand">
             Favorite Brand: <strong>{displayFavBrandName()}</strong>
@@ -196,8 +212,8 @@ const EmployeeForm = ({
             onChange={(option) => setFavBrandId(option.value)}
           />
         </div>
-      }
-      {equipments && 
+      )}
+      {equipments && (
         <div className="control">
           <label htmlFor="equipments">Equipments:</label>
           <ul>
@@ -223,7 +239,7 @@ const EmployeeForm = ({
             ))}
           </select>
         </div>
-      }
+      )}
 
       <div className="buttons">
         <button type="submit" disabled={disabled}>
