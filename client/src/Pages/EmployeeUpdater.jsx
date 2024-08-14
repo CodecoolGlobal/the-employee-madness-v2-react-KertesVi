@@ -26,6 +26,10 @@ const fetchBrands = () => {
   return fetch(`/api/brands`).then((res) => res.json());
 };
 
+const fetchCompanies = () => {
+  return fetch(`/api/company`).then((res) => res.json());
+};
+
 const EmployeeUpdater = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -35,12 +39,25 @@ const EmployeeUpdater = () => {
   const [employeeLoading, setEmployeeLoading] = useState(true);
   const [equipments, setEquipments] = useState([]);
   const [brands, setBrands] = useState("");
+  const [companies, setCompanies] = useState();
+
 
   useEffect(() => {
     setEmployeeLoading(true);
+    fetchCompanies()
+      .then((companies) =>
+        setCompanies(
+          companies.map((company) => ({
+            label: company.name,
+            value: company._id,
+          }))
+        )
+      )
+      .catch((error) => console.error(error));
     fetchEmployee(id).then((employee) => {
       setEmployee(employee);
       fetchEquipments().then((equipments) => setEquipments(equipments));
+
       fetchBrands().then((brands) =>
         setBrands(
           brands.map((nextBrand) => ({
@@ -57,7 +74,7 @@ const EmployeeUpdater = () => {
     setUpdateLoading(true);
     updateEmployee(employee).then(() => {
       setUpdateLoading(false);
-      alert("Employee updated")
+      alert("Employee updated");
       navigate(`/update/${employee._id}`);
     });
   };
@@ -67,6 +84,7 @@ const EmployeeUpdater = () => {
   }
   return (
     <EmployeeForm
+      companies={companies}
       brands={brands}
       equipments={equipments}
       employee={employee}

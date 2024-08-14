@@ -29,6 +29,11 @@ export default function Layout() {
             <Link to="/create">
               <button type="button">Create Employee</button>
             </Link>
+
+            <Link to="/company">
+              <button type="button">Create Company</button>
+            </Link>
+
           </li>
         </ul>
       </nav>

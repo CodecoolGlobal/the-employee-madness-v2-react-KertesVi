@@ -36,6 +36,7 @@ const EmployeeSchema = new Schema({
   salary: Number,
   desiredSalary: Number,
   division: Schema.Types.ObjectId,
+  company: Schema.Types.ObjectId,
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
